@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Quartos para o 20</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="stylesheet.css">
+    </head>
+    <body>
+        <div id="header">
+
+        </div>
+        <div id="formulario">
+            <form name="formHome" action="http://alunos.di.uevora.pt/tweb/t1/registaprocura" enctype="multipart/form-data" method="POST">
+                <p>
+                    Tipologia: 
+                    <select name="homeTypology" required>
+                        <option>T0</option>
+                        <option>T1</option>
+                        <option>T2</option>
+                        <option>T3</option>
+                        <option>T4</option>
+                        <option>T5</option>
+                        <option>T6</option>
+                    </select>
+                </p>
+                <p>
+                    Sexo do inclino:
+                </p> 
+                <ul id="s">
+                    <li><input type="radio" name="age" value="masc">Masculino</li>
+                    <li><input type="radio" name="age" value="femi">Feminino</li>
+                    <li><input type="radio" name="age" value="indi">Indiferente</li>
+                </ul>
+                <p>
+                    Preço do arrendamento: <label><input type="text" name="price" size="4" maxlength="10" required></label>
+                </p>
+                <p>
+                    O seu nome: <label><input type="text" name="advertiserName" required></label>
+                </p>
+                <p>
+                    Local do imóvel: <label><input type="text" name="propertyLocation" required></label>
+                </p>
+                <p>
+                    Data do registo: <label><input type="date" name="rentalDate" required></label>
+                </p>
+                <p>
+                    Estado: 
+                    <select name="rentState" required>
+                        <option>Ativo</option>
+                        <option>Oculto</option>
+                        <option>Terminado</option>  
+                    </select>
+                </p>
+                <div id="observações">
+                    <p>
+                        Observações: 
+                    </p>
+                    <textarea id="obs" name="obs" rows="5" cols="30">Coloque aqui o seu texto!</textarea>
+            </div>
+                <p>
+                    Foto: <input type="file" name="photo">
+                </p>
+                <input type="submit">
+                <input type="reset" value="Reset">
+            </form>
+        </div>
+    </body>
+</html>
