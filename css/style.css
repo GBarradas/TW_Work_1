@@ -63,6 +63,7 @@ header nav ul li a:hover, header nav a:hover{
     margin: 0 10vw;
     margin-bottom: 5vw;
 }
+
 /*
 * Anuncios
 */
@@ -120,3 +121,47 @@ footer{
     font-size: smaller;
     padding: 10px 0;
 }
+/*
+* Abas
+*/
+.container{
+    box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.25);
+
+    clear: both;
+}
+.select-wraper .aba-option{
+    background-color: rgba(0,0,0,1);
+    color: white;
+    border-bottom: 3px solid rgba(0,0,0,0.25);
+    width: 50%;
+    display: inline-block;
+    float: left;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.select-wraper .aba-option *{
+    padding: 1% 10%;
+}
+.select-wraper .aba-option.active{
+    background-color: white;
+    color:black;
+    border-bottom: 3px solid white
+
+}
+.content-wraper{
+    padding: 2% 5%;
+    margin-top: 20px;
+}
+.content-wraper > div{
+    display: none;
+    color: #808184;
+}
+.content-wraper > div.active{
+    padding-top: 5%;
+    display: block;
+}
+
+
+
+
+

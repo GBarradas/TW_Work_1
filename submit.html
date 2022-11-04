@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Gonçalo Barradas, Andre Baião" />
+  <title>NEEI | Portal do Alojamento</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css" >
+  <link rel="icon" href="img/favicon.ico"/>
+
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">
+                <img class="neei_logo" src="img/Logo_NEEI_Sem_Fundo_cortado.svg" alt="Logo NEEI" >
+                <div id="name"><h1>Portal do Alojamento</h1></div>
+            </a>
+            <ul>
+                <li><a href="#">Procurar...</a></li>
+                <li><a href="/anuncios.html">Anuncios</a></li>
+                <li><a href="/submit.html">Fazer Anuncio</a></li>
+                <li><a href="#">Area Reservada</a></li>
+
+            </ul>
+        </nav>
+    </header>
+<!--Considerar main em vez de div id="main"-->
+  <div id="main">
+      <div class="container" >
+          <div class="select-wraper" >
+              <div class="aba-option active" onclick="changeAba(this)" ><h3>Procura</h3></div>
+              <div class="aba-option" onclick="changeAba(this)" ><h3>Oferta</h3></div>
+          </div>
+          <div class="content-wraper"  >
+              <div class="aba-content active">
+                  <form action="#" method="#" >
+                      <label>Nome: <input name="nome" type="text" required ></label>
+                      <label class="sexo" >Sexo:
+                          <select name="sexo" required>
+                              <option>Masculino</option>
+                              <option>Feminino</option>
+                          </select>
+                      </label>
+                      <br>
+                      <label>
+                      Tipologia:
+                          <select name="tipo" required >
+                              <optgroup label="Apartamento">
+                                  <option>T0</option>
+                                  <option>T1</option>
+                                  <option>T2</option>
+                                  <option>T3</option>
+                                  <option>T4</option>
+                                  <option>T5</option>
+                                  <option>T6</option>
+                              </optgroup>
+                              <optgroup label="Quartos">
+                                  <option>Individual</option>
+                                  <option>Duplo</option>
+                              </optgroup>
+                              </select>
+                      </label>
+                  </form>
+              </div>
+              <div class="aba-content">
+                  aba2
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+      const oferta = 'http://alunos.di.uevora.pt/tweb/t1/registaoferta';
+      const procura= 'http://alunos.di.uevora.pt/tweb/t1/registaprocura';
+      function changeAction(a){
+
+        if(a== 'oferta'){
+
+        }
+      }
+      function changeAba(a){
+          if(a.classList.contains('active'))
+              return false;
+          let act = document.querySelector('.aba-content.active');
+          let actp = document.querySelector('.aba-option.active');
+          for(n of document.querySelectorAll('.aba-content')){
+              if(n != act ){
+                  n.classList.add('active');
+              }
+          }
+          actp.classList.remove('active');
+          act.classList.remove('active');
+          a.classList.add('active');
+
+      }
+  </script>
+
+</body>
+</html>
