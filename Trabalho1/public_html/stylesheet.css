@@ -1,0 +1,92 @@
+/*          css para header & navOption                */
+
+header{
+    display: block;
+    background-color: dodgerblue;
+    height: 100px;
+    width: 100%;
+    position: relative;
+    margin-bottom: unset;
+}
+body{
+    margin: 0;
+}
+#logo{
+    position: absolute;
+    top: -10px;
+    left: -90px;
+}
+#pda{
+    font-family: Ubuntu, sans-serif;
+    font-weight: bold;
+    position: absolute;
+    top: 50px;
+    left: 250px;
+    color: #171717;
+}
+#navoption{
+    display: block;
+    background-color: silver;
+    block-size: 50px;
+    position: relative;
+    top: 100px;
+    margin-bottom: 0;
+}
+#mm a, #accom a, #srch a, #anno a{
+    color: black;
+    font-family: Ubuntu, sans-serif;
+    font-size: larger;
+    text-decoration: none;
+}
+#mm{
+    position: absolute;
+    top: 13px;
+    left: 30px;
+    margin-right: 50px;
+    float: left;
+}
+#accom{
+    position: absolute;
+    top: 13px;
+    left: 150px;
+    margin-right: 50px;
+}
+#srch{
+    position: absolute;
+    top: 13px;
+    left: 330px;
+    margin-right: 50px;
+}
+#anno{
+    position: absolute;
+    top: 13px;
+    left: 500px;
+    margin-right: 50px;
+}
+/*----------------------------------------------------*/
+/*          css para announce.html                    */
+
+#formulario {
+    transform-style: preserve-3d;
+    position: relative;
+    top: 35px;
+    left: 45px;
+    background-color: red;
+    font-size: larger;
+    margin-right: 50vw;
+    font-family: Ubuntu, serif;
+}
+/*------------------------------------------------------*/
+/*              css para footer(rodapé)                 */
+footer{
+    display: flex;
+    flex-direction: column;
+    color: #f7f7f7;
+    background-color: #171717;
+    height: 60px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    text-align: center;
+}

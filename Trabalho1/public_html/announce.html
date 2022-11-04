@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="pt-pt">
+    <head>
+        <title>Quartos para o 20</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="stylesheet.css">
+    </head>
+    <body>
+        <header>
+            <a href="main_menu.html">
+                <div id="logo">
+                    <img src="images/logoneei.svg" alt="NEEI">
+                    <p id="pda">Portal do Alojamento</p>
+                </div>
+            </a>
+            <div id="navoption">
+                <div id="mm"><a href="main_menu.html">Início</a></div>
+                <div id="accom"><a href="">Alojamentos</a></div>
+                <div id="srch"><a href="">Procura-se</a></div>
+                <div id="anno"><a href="announce.html">Anunciar</a></div>
+            </div>
+        </header>
+        <div id="formulario">
+            <form name="formHome" action="http://alunos.di.uevora.pt/tweb/t1/registaprocura" enctype="multipart/form-data" method="POST">
+                <p>
+                    Tipologia:
+                    <label>
+                        <select name="homeTypology" required>
+                            <optgroup label="T...">
+                                <option>T0</option>
+                                <option>T1</option>
+                                <option>T2</option>
+                                <option>T3</option>
+                                <option>T4</option>
+                                <option>T5</option>
+                                <option>T6</option>
+                            </optgroup>
+                        </select>
+                    </label>
+                </p>
+                <p>
+                    Sexo do inclino:
+                </p> 
+                <ul id="s">
+                    <li><label>Masculino<input type="radio" name="age" value="masc"></label></li>
+                    <li><label>Feminino<input type="radio" name="age" value="femi"></label></li>
+                    <li><label>Indiferente<input type="radio" name="age" value="indi"></label></li>
+                </ul>
+                <p>
+                    Preço do arrendamento: <label><input type="text" name="price" size="4" maxlength="10" required></label>
+                </p>
+                <p>
+                    O seu nome: <label><input type="text" name="advertiserName" required></label>
+                </p>
+                <p>
+                    Local do imóvel: <label><input type="text" name="propertyLocation" required></label>
+                </p>
+                <p>
+                    Data do registo: <label><input type="date" name="rentalDate" required></label>
+                </p>
+                <p>
+                    Estado:
+                    <label>
+                        <select name="rentState" required>
+                            <optgroup label="o anuncio encontra-se...">
+                            <option>Ativo</option>
+                            <option>Oculto</option>
+                            <option>Terminado</option>
+                            </optgroup>
+                        </select>
+                    </label>
+                </p>
+                <div id="observações">
+                    <p>
+                        Observações: 
+                    </p>
+                    <label for="obs"><textarea id="obs" name="obs" rows="5" cols="30">Coloque aqui o seu texto!</textarea></label>
+                </div>
+                <p>
+                    Foto: <input type="file" name="photo">
+                </p>
+                <input type="submit">
+                <input type="reset" value="Reset">
+            </form>
+        </div>
+    <footer>
+        <small> All rights reseved| By Gbarradas & Abaião</small>
+    </footer>
+    </body>
+</html>
