@@ -35,19 +35,24 @@
           </div>
           <div class="content-wraper"  >
               <div class="aba-content active">
-                  <form action="#" method="#" >
-                      <label>Nome: <input name="nome" type="text" required ></label>
-                      <label class="sexo" >Sexo:
-                          <select name="sexo" required>
-                              <option>Masculino</option>
-                              <option>Feminino</option>
-                              <option>Indiferente</option>
-                          </select>
-                      </label>
+                  <form action="http://alunos.di.uevora.pt/tweb/t1/registaprocura" method="POST" onsubmit="showrespot()" >
+                      <label>Nome:
+                          <input type="text" name="anunciante" >
+                          </label>
+                      <br>
+                      <label>Telemovel: <input type="tel" name="contacto"  ></label>
+                      <br>
+                      <label>Genero:
+                              <select name="genero" required>
+                                  <option>Masculino</option>
+                                  <option>Feminino</option>
+                                  <option>Indiferente</option>
+                              </select>
+                          </label>
                       <br>
                       <label>
                       Tipologia:
-                          <select name="tipo" required >
+                          <select name="tipo_alojamento" required >
                               <optgroup label="Apartamento">
                                   <option>T0</option>
                                   <option>T1</option>
@@ -63,10 +68,33 @@
                               </optgroup>
                               </select>
                       </label>
+                      <br>
+                      <label>
+                          Preço:
+                          <input type="number"  name="preco" step="1" >
+                      </label>
+                      <br>
+                      <label>
+                          Locallização
+                          <input type="text" name="zona" >
+                      </label>
+                      <br>
+                      <label>
+                          Imagem:
+                          <input type="file" name="image" >
+                      </label>
+                      <br>
+                      <label>
+                          Observações:
+                          <textarea name="detalhes" rows="5" cols="30" placeholder="Coloque aqui os seu texto!!"></textarea>
+                      </label>
+                      <br>
+                      <input type="submit"  >
+                      <input type="reset" >
                   </form>
               </div>
               <div class="aba-content">
-                  aba2
+                  <!---->
               </div>
           </div>
       </div>
@@ -75,12 +103,6 @@
   <script>
       const oferta = 'http://alunos.di.uevora.pt/tweb/t1/registaoferta';
       const procura= 'http://alunos.di.uevora.pt/tweb/t1/registaprocura';
-      function changeAction(a){
-
-        if(a== 'oferta'){
-
-        }
-      }
       function changeAba(a){
           if(a.classList.contains('active'))
               return false;
@@ -95,6 +117,14 @@
           act.classList.remove('active');
           a.classList.add('active');
 
+      }
+      function showrespost(){
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function(){
+              if (this.readyState == 4 && this.status == 200){
+                  console.log(xhttp.responseText)
+              }
+          }
       }
   </script>
 
