@@ -7,14 +7,16 @@
         <title>NEEI | Portal do Alojamento</title>
         <link rel="stylesheet" type="text/css" href="css/style.css" >
         <link rel="icon" href="img/favicon.ico"/>
+        <script src="js/anuncios.js" ></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
     <header>
         <nav>
-            <a href="/">
                 <img class="neei_logo" src="img/Logo_NEEI_Sem_Fundo_cortado.svg" alt="Logo NEEI" >
-                <div id="name"><h1>Portal do Alojamento</h1></div>
-            </a>
+                <div>
+                    <a href="\" id="name"><h1>Portal do Alojamento</h1></a>
+                </div>
             <ul>
                 <li><a href="#">Procurar...</a></li>
                 <li><a href="/anuncios.html">Anuncios</a></li>
@@ -26,37 +28,36 @@
     </header>
     <!--Considerar main em vez de div id="main"-->
     <div id="main">
-        <h1>Em Destaque </h1>
-        <div id="aid1" class="anuncio" >
-            <img src="img/default.png" alt="img anuncio1">
-            <div class="ainfos">
-                <h3>Titulo do Quarto 1</h3>
-                <div class="atipo" > <span class="descricao" >Tipo:</span>  <span id="tipoaid1" >Quarto Individual</span> </div>
-                <div class="ades" >  <span class="descricao" >Destinatario: </span> <span id="destaid1" >Indiferente</span> </div>
-                <div class="aloca" > <span class="descricao" >Localização: </span> <span id="alocaaid1" >Rua Bernardo de Matos, 52</span> </div>
-                <div class="apre" >  <span class="descricao" >Preço: </span> <span id="preaid1" >250€</span> </div>
-                <div class="aarr" >  <span class="descricao" >Nome Senhorio: </span> <span id="arraid1" >Ian sdwmru</span> </div>
-            </div>
+        <h1>Oferta </h1>
+        <div id="desOferta" class="grid3" >
+
+
+
+
         </div>
-        <div id="aid2" class="anuncio" >
-            <img src="img/default" alt="img anuncio2">
-            <div class="ainfos">
-                <h3>Titulo do Quarto 2</h3>
-                <div class="atipo" > <span class="descricao" >Tipo:</span>  <span id="tipoaid2" >Quarto Individual</span> </div>
-                <div class="ades" >  <span class="descricao" >Destinatario: </span> <span id="destaid2" >Indiferente</span> </div>
-                <div class="aloca" > <span class="descricao" >Localização: </span> <span id="alocaaid2" >Rua Bernardo de Matos, 52</span> </div>
-                <div class="apre" >  <span class="descricao" >Preço: </span> <span id="preaid2" >250€</span> </div>
-                <div class="aarr" >  <span class="descricao" >Nome Senhorio: </span> <span id="arraid2" >Ian sdwmruv</span> </div>
-            </div>
+        <h1>Procura</h1>
+        <div id="desProcura" class="grid3">
+
         </div>
 
     </div>
+
+
+
+
+
+
+
+    </div>
+    <script>get3()</script>
     <footer>
         <p id="ppatrocinios">Patrocinios: </p>
         <div id="patrocinios">
             <!--Considerar links para as imagens-->
             <img src="img/logotipo_Uevora_pt_branco.png" alt="Universidade de Évora">
             <img src="img/LOGOEVORA_CORES.webp" alt="Camara Mununicipal de Évora">
+            <img src="img/aaue.png" alt="Associação Academica da Universidade de Évora" >
+            <img src="" alt="Departamento de Informatica UE" >
         </div>
 
         <hr>

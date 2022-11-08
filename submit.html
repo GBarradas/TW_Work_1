@@ -35,7 +35,7 @@
           </div>
           <div class="content-wraper"  >
               <div class="aba-content active">
-                  <form action="http://alunos.di.uevora.pt/tweb/t1/registaprocura" method="POST" onsubmit="showrespot()" >
+                  <form action="http://alunos.di.uevora.pt/tweb/t1/registaprocura" method="POST"  >
                       <label>Nome:
                           <input type="text" name="anunciante" >
                           </label>
@@ -75,7 +75,7 @@
                       </label>
                       <br>
                       <label>
-                          Locallização
+                          Localização:
                           <input type="text" name="zona" >
                       </label>
                       <br>
@@ -94,7 +94,63 @@
                   </form>
               </div>
               <div class="aba-content">
-                  <!---->
+                  <form action="http://alunos.di.uevora.pt/tweb/t1/registaoferta" method="POST" >
+                      <label> Nome:
+                          <input type="text" name="anunciante">
+                      </label>
+                      <br>
+                      <label>Telemovel: <input type="tel" name="contacto"  ></label>
+                      <br>
+                      <label>Genero:
+                          <select name="genero" required>
+                              <option>Masculino</option>
+                              <option>Feminino</option>
+                              <option>Casal</option>
+                          </select>
+                      </label>
+                      <br>
+                      <label>
+                          Tipologia:
+                          <select name="tipo_alojamento" required >
+                              <optgroup label="Apartamento">
+                                  <option>T0</option>
+                                  <option>T1</option>
+                                  <option>T2</option>
+                                  <option>T3</option>
+                                  <option>T4</option>
+                                  <option>T5</option>
+                                  <option>T6</option>
+                              </optgroup>
+                              <optgroup label="Quartos">
+                                  <option>Individual</option>
+                                  <option>Duplo</option>
+                              </optgroup>
+                          </select>
+                      </label>
+                      <br>
+                      <label>
+                          Preço:
+                          <input type="number"  name="preco" step="1" >
+                      </label>
+                      <br>
+                      <label>
+                      Localização:
+                      <input type="text" name="zona" >
+                      </label>
+                      <br>
+                      <label>
+                          Imagem:
+                          <input type="file" name="image" >
+                      </label>
+                      <br>
+                      <label>
+                          Observações:
+                          <textarea name="detalhes" rows="5" cols="30" placeholder="Coloque aqui os seu texto!!"></textarea>
+                      </label>
+                      <br>
+                      <input type="submit"  >
+                      <input type="reset" >
+                  </form>
               </div>
           </div>
       </div>
