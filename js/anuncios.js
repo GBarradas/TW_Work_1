@@ -9,6 +9,7 @@ function get3() {
     xhttp.send('tipo=oferta')
     xhttp.onload = function(){
         let oferta = JSON.parse(xhttp.responseText).resultados
+        console.log(oferta)
         //ordenar de forma a obeter os 3 anuncios
         let i=0
         for(f of oferta){
