@@ -1,16 +1,20 @@
+const url = 'http://alunos.di.uevora.pt/tweb/t1/roomsearch'
 function get3() {
-    let url = 'http://alunos.di.uevora.pt/tweb/t1/roomsearch'
     let xhttp = new XMLHttpRequest();
     let ofer = $('#desOferta')
-    let proc = $('#desProcura')
 
+    let proc = $('#desProcura')
     xhttp.open('POST', url,true);
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send('tipo=oferta')
     xhttp.onload = function(){
         let oferta = JSON.parse(xhttp.responseText).resultados
-        console.log(oferta)
         //ordenar de forma a obeter os 3 anuncios
+
+        oferta.sort(function (a,b){
+            return a.aid- b.aid
+        })
+        //-----------------------------------------
         let i=0
         for(f of oferta){
             if(i>=3){
@@ -32,21 +36,36 @@ function get3() {
         //ordenar de forma a obeter os 3 anuncios
         let i=0
         for(f of procura){
+
             if(i>=3){
                 break
-            }
-
-            else if(f.estado == 'ativo') {
+            } else if(f.estado == 'ativo') {
                 proc.append(anuncioHTML(f.aid,f.detalhes,f.tipo_alojamento,f.genero, f.zona, f.preco, f.anunciante))
                 i++;
             }
         }
     }
-
-
-
 }
-function anuncioHTML(aid, titlo,tipo_alojamento,genero,zona, preco, arrendatario, imgsrc='/img/default.png'){
+
+function compare(x, y){
+    let d1 = Date.parse(x)
+    let d2 = Date.parse(y)
+    console.log(d1+' '+d2)
+
+    if(d1<d2){
+        return -1
+    }
+    if(d1>d2){
+        return 1
+    }
+    else{
+        return 0
+    }
+}
+function anuncioCTipo(aid,tipo,titlo,tipo_alojamento,genero,zona, preco, arrendatario, imgsrc='/img/default.png'){
+    return anuncioHTML(aid,tipo.toUpperCase()+': '+titlo,tipo_alojamento,genero,zona, preco, arrendatario, imgsrc)
+}
+function anuncioHTML(aid,titlo,tipo_alojamento,genero,zona, preco, arrendatario, imgsrc='/img/default.png'){
     let labels = ['Tipo de Alojamento','Genero','Zona','Preço', 'Anunciante']
     let infos =[tipo_alojamento, genero, zona, preco, arrendatario]
     let maindiv = document.createElement('div')
@@ -75,16 +94,63 @@ function anuncioHTML(aid, titlo,tipo_alojamento,genero,zona, preco, arrendatario
 }
 
 
-/*
-<div id="aid" class="anuncio" >
-            <img src="img/default.png" alt="img anuncio2">
-            <div class="ainfos">
-                <h3>Titulo do Quarto 2</h3>
-                <div class="atipo" > <span class="descricao" >Tipo:</span>  <span id="tipoaid2" >Quarto Individual</span> </div>
-                <div class="ades" >  <span class="descricao" >Destinatario: </span> <span id="destaid2" >Indiferente</span> </div>
-                <div class="aloca" > <span class="descricao" >Localização: </span> <span id="alocaaid2" >Rua Bernardo de Matos, 52</span> </div>
-                <div class="apre" >  <span class="descricao" >Preço: </span> <span id="preaid2" >250€</span> </div>
-                <div class="aarr" >  <span class="descricao" >Nome Senhorio: </span> <span id="arraid2" >Ian sdwmruv</span> </div>
-            </div>
-        </div>
-*/
+
+function getAnnoun(){
+    let xhttp = new XMLHttpRequest()
+    let res = $('#results')
+
+    xhttp.open('POST', url, true)
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    xhttp.send('tipo=oferta')
+
+    xhttp.onload = function (){
+        let oferta = JSON.parse(xhttp.responseText).resultados
+        for (o of oferta){
+            res.append(anuncioCTipo(o.aid,'oferta',o.detalhes, o.tipo_alojamento,o.genero, o.zona, o.preco, o.anunciante))
+        }
+    }
+
+    let xhttp2 = new XMLHttpRequest()
+    let res2 = $('#results')
+
+    xhttp2.open('POST',url,true)
+    xhttp2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    xhttp2.send('tipo=procura')
+
+    xhttp2.onload = function (){
+        let procura = JSON.parse(xhttp2.responseText).resultados
+        for(p of procura){
+            res.append(anuncioCTipo(p.aid,'procura', p.detalhes, p.tipo_alojamento, p.genero, p.zona, p.preco, p.anunciante))
+        }
+    }
+}
+function filtrarAnuncios(){
+    alert('hello')
+    let arg =''
+    let form = document.forms['search-form']
+    arg += form['tipo'].name+'='+form['tipo'].value+'&'
+    arg += form['zona'].name+'='+form['zona'].value+'&'
+    arg += form['anunciante'].name+'='+form['anunciante'].value
+    alert(arg)
+    /*var xhttp = new XMLHttpRequest()
+    xhttp.open('post',url,true)
+    xhttp2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    let arg =''
+    let form = document.forms['search-form']
+    arg += form['tipo'].name+'='+form['tipo'].value+'&'
+    arg += form['tipo_alojamento'].name+'='+form['tipo_alojamento'].value+'&'
+    arg += form['anunciante'].name+'='+form['anunciante'].value
+    xhttp2.send(arg)
+    alert(arg)
+    xhttp.onreadystatechange = function (){
+        if(this.readyState == 4 && this.status == 200) {
+            alert(xhttp.responseText)
+
+
+        }
+    }
+    return false
+
+     */
+}
+
