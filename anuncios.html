@@ -12,19 +12,7 @@
 </head>
 <body>
 <header>
-    <nav>
-        <img class="neei_logo" src="img/Logo_NEEI_Sem_Fundo_cortado.svg" alt="Logo NEEI" >
-        <div>
-            <a href="\" id="name"><h1>Portal do Alojamento</h1></a>
-        </div>
-        <ul>
-            <li><a href="#">Procurar...</a></li>
-            <li><a href="/anuncios.html">Anuncios</a></li>
-            <li><a href="/submit.html">Fazer Anuncio</a></li>
-            <li><a href="#">Area Reservada</a></li>
 
-        </ul>
-    </nav>
 </header>
 <!--Considerar main em vez de div id="main"-->
 <div id="main">
@@ -33,9 +21,7 @@
         <h1>Pesquisar </h1>
         <hr>
         <form id="search-form" name ="search-form" class="grid2"
-              action="http://alunos.di.uevora.pt/tweb/t1/roomsearch"
-              method="POST"
-              onsubmit="return filtrarAnuncios()" >
+              onsubmit="return filtrarAnuncios(this);" >
             <div>
                 <label for="tipo" >Tipo de Anuncio: </label><br>
                 <select name="tipo" id="tipo">
@@ -59,10 +45,19 @@
             </div>
         </form>
     </div>
+    <div id="results">
 
+    </div>
+    <div id="paginacao" >
+
+    </div>
 </div>
+<footer>
 
 </footer>
-
+<script>
+    getAnnoun()
+    loadHF()
+</script>
 </body>
 </html>

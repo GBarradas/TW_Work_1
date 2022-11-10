@@ -8,23 +8,13 @@ function get3() {
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send('tipo=oferta')
     xhttp.onload = function(){
+
         let oferta = JSON.parse(xhttp.responseText).resultados
         //ordenar de forma a obeter os 3 anuncios
-
-        oferta.sort(function (a,b){
-            return a.aid- b.aid
-        })
         //-----------------------------------------
-        let i=0
-        for(f of oferta){
-            if(i>=3){
-                break
-            }
-
-            else if(f.estado == 'inativo') {
-                ofer.append(anuncioHTML(f.aid,f.detalhes,f.tipo_alojamento,f.genero, f.zona, f.preco, f.anunciante))
-                i++;
-            }
+        let res = alasql("select * from  ? where estado='ativo' order by date limit 3",[oferta])
+        for(f of res){
+            ofer.append(anuncioHTML(f.aid,f.detalhes,f.tipo_alojamento,f.genero, f.zona, f.preco, f.anunciante))
         }
     }
     let xhttp2 = new XMLHttpRequest();
@@ -34,32 +24,11 @@ function get3() {
     xhttp2.onload = function(){
         let procura = JSON.parse(xhttp2.responseText).resultados
         //ordenar de forma a obeter os 3 anuncios
-        let i=0
-        for(f of procura){
-
-            if(i>=3){
-                break
-            } else if(f.estado == 'ativo') {
+        let res = alasql("select * from  ? where estado='ativo' order by date limit 3",[procura])
+        for(f of res){
                 proc.append(anuncioHTML(f.aid,f.detalhes,f.tipo_alojamento,f.genero, f.zona, f.preco, f.anunciante))
-                i++;
-            }
+
         }
-    }
-}
-
-function compare(x, y){
-    let d1 = Date.parse(x)
-    let d2 = Date.parse(y)
-    console.log(d1+' '+d2)
-
-    if(d1<d2){
-        return -1
-    }
-    if(d1>d2){
-        return 1
-    }
-    else{
-        return 0
     }
 }
 function anuncioCTipo(aid,tipo,titlo,tipo_alojamento,genero,zona, preco, arrendatario, imgsrc='/img/default.png'){
@@ -67,7 +36,7 @@ function anuncioCTipo(aid,tipo,titlo,tipo_alojamento,genero,zona, preco, arrenda
 }
 function anuncioHTML(aid,titlo,tipo_alojamento,genero,zona, preco, arrendatario, imgsrc='/img/default.png'){
     let labels = ['Tipo de Alojamento','Genero','Zona','Preço', 'Anunciante']
-    let infos =[tipo_alojamento, genero, zona, preco, arrendatario]
+    let infos =[tipo_alojamento, genero, zona, preco+'€', arrendatario]
     let maindiv = document.createElement('div')
     maindiv.id= aid;
     maindiv.classList= 'anuncio'
@@ -90,6 +59,9 @@ function anuncioHTML(aid,titlo,tipo_alojamento,genero,zona, preco, arrendatario,
         infodiv.append(idiv)
     }
     maindiv.append(infodiv)
+    maindiv.onclick = function (){
+        window.location.href = '/anuncio.html?aid='+aid;
+    }
     return maindiv
 }
 
@@ -97,60 +69,123 @@ function anuncioHTML(aid,titlo,tipo_alojamento,genero,zona, preco, arrendatario,
 
 function getAnnoun(){
     let xhttp = new XMLHttpRequest()
-    let res = $('#results')
 
     xhttp.open('POST', url, true)
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
     xhttp.send('tipo=oferta')
-
+    let procura
+    let oferta
     xhttp.onload = function (){
-        let oferta = JSON.parse(xhttp.responseText).resultados
-        for (o of oferta){
-            res.append(anuncioCTipo(o.aid,'oferta',o.detalhes, o.tipo_alojamento,o.genero, o.zona, o.preco, o.anunciante))
-        }
-    }
+        oferta = JSON.parse(xhttp.responseText).resultados
 
+        paginar(oferta)
+
+    }
     let xhttp2 = new XMLHttpRequest()
-    let res2 = $('#results')
 
     xhttp2.open('POST',url,true)
     xhttp2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-    xhttp2.send('tipo=procura')
 
+    xhttp2.send('tipo=procura')
     xhttp2.onload = function (){
-        let procura = JSON.parse(xhttp2.responseText).resultados
-        for(p of procura){
-            res.append(anuncioCTipo(p.aid,'procura', p.detalhes, p.tipo_alojamento, p.genero, p.zona, p.preco, p.anunciante))
-        }
+        procura = JSON.parse(xhttp2.responseText).resultados
     }
 }
-function filtrarAnuncios(){
-    alert('hello')
-    let arg =''
-    let form = document.forms['search-form']
-    arg += form['tipo'].name+'='+form['tipo'].value+'&'
-    arg += form['zona'].name+'='+form['zona'].value+'&'
-    arg += form['anunciante'].name+'='+form['anunciante'].value
-    alert(arg)
-    /*var xhttp = new XMLHttpRequest()
-    xhttp.open('post',url,true)
-    xhttp2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-    let arg =''
-    let form = document.forms['search-form']
-    arg += form['tipo'].name+'='+form['tipo'].value+'&'
-    arg += form['tipo_alojamento'].name+'='+form['tipo_alojamento'].value+'&'
-    arg += form['anunciante'].name+'='+form['anunciante'].value
-    xhttp2.send(arg)
-    alert(arg)
-    xhttp.onreadystatechange = function (){
-        if(this.readyState == 4 && this.status == 200) {
-            alert(xhttp.responseText)
 
+function filtrarAnuncios(form){
+    var xhttp = new XMLHttpRequest()
+    xhttp.onreadystatechange= function (){
+    if (xhttp.readyState == XMLHttpRequest.DONE) {
+                let result = JSON.parse(xhttp.responseText).resultados
 
         }
     }
+    xhttp.open('POST',url,true)
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    var arg = '';
+    arg += form['tipo'].name+'='+form['tipo'].value+'&';
+    arg += form['zona'].name+'='+form['zona'].value+'&';
+    arg += form['anunciante'].name+'='+form['anunciante'].value;
+    xhttp.send(arg)
     return false
 
-     */
-}
 
+}
+function paginar(anun){
+    let resultados = $('#results')
+    let pagin = $('#paginacao')
+    resultados.empty()
+    pagin.empty()
+    mpages = Math.ceil(anun.length/4)
+    alert(anun+"\n"+mpages)
+    pagin.append(getDivOption('«','pagOpt',1,'optfp'))
+    pagin.append(getDivOption('<','pagOpt',1,'optpp'))
+    pagin.append(getDivOption("Pagina <span id='actpage' >1</span> de <span id='npages' >"+mpages+"</span>",'pagInfo'))
+    pagin.append(getDivOption('>','pagOpt',2,'optnp'))
+    pagin.append(getDivOption('»','pagOpt',mpages,'optlp'))
+    for(let i = 0; i <mpages;i++){
+        let div = document.createElement('div')
+        div.classList.add('grid2a');
+        div.classList.add('page')
+        for(let j = 0; j< 4 ||(j+(i*4))>anun.length;j++){
+            let a = anun[(i*4)+j];
+            div.append(anuncioHTML())
+        }
+    }
+
+}
+function showPage(n){
+    let pagin = $('#paginacao')
+    let optpp = $('#optpp')
+    let optnp = $('#optnp')
+    let actpage = $('#actpage')
+    let npages = $('#npages')
+}
+function editOnclick(div, newopt){
+    div.onclick = function (){
+        showPage(newopt)
+    }
+}
+function getDivOption(text, cla,oncfun,id){
+    let div = document.createElement('div');
+    div.innerHTML = text;
+    div.classList = cla;
+    div.id= id;
+    div.onclick= function (){
+        showPage(oncfun)
+    };
+    return div
+}
+function loadHF(){
+    let xhttp = new XMLHttpRequest()
+    xhttp.onreadystatechange = function (){
+        if(this.readyState == 4 && this.status == 200){
+            document.querySelector('header').innerHTML = this.responseText
+        }
+    }
+    xhttp.open("GET","/header.html", true)
+    xhttp.send()
+
+    let xhttp2 = new XMLHttpRequest()
+    xhttp2.onreadystatechange = function (){
+        if(this.readyState == 4 && this.status == 200){
+            document.querySelector('footer').innerHTML = this.responseText
+        }
+    }
+    xhttp2.open("GET","/footer.html", true)
+    xhttp2.send()
+}
+function loadAnnoun(){
+    let url = window.location.search;
+    let param = new URLSearchParams(url);
+    let aid = param.get('aid');
+    let xhttp = new XMLHttpRequest()
+    let imgsrc = '/img/default.png'
+    xhttp.onload = function (){
+        let anc = JSON.parse(xhttp.responseText).anuncio
+        console.log(anc)
+    }
+    xhttp.open('post','http://alunos.di.uevora.pt/tweb/t1/anuncio',true)
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    xhttp.send(`aid=${aid}`)
+}

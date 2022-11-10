@@ -9,22 +9,11 @@
         <link rel="icon" href="img/favicon.ico"/>
         <script src="js/anuncios.js" ></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/alasql@2"></script>
     </head>
     <body>
     <header>
-        <nav>
-                <img class="neei_logo" src="img/Logo_NEEI_Sem_Fundo_cortado.svg" alt="Logo NEEI" >
-                <div>
-                    <a href="\" id="name"><h1>Portal do Alojamento</h1></a>
-                </div>
-            <ul>
-                <li><a href="#">Procurar...</a></li>
-                <li><a href="/anuncios.html">Anuncios</a></li>
-                <li><a href="/submit.html">Fazer Anuncio</a></li>
-                <li><a href="#">Area Reservada</a></li>
 
-            </ul>
-        </nav>
     </header>
     <!--Considerar main em vez de div id="main"-->
     <div id="main">
@@ -49,19 +38,12 @@
 
 
     </div>
-    <script>get3()</script>
+    <script>
+        get3()
+        loadHF()
+    </script>
     <footer>
-        <p id="ppatrocinios">Patrocinios: </p>
-        <div id="patrocinios">
-            <!--Considerar links para as imagens-->
-            <img src="/img/logotipo_Uevora_pt_branco.png" alt="Universidade de Évora">
-            <img src="/img/LOGOEVORA_CORES.webp" alt="Camara Mununicipal de Évora">
-            <img src="/img/aaue.png" alt="Associação Academica da Universidade de Évora" >
-            <img src="/img/dinf_ue.png" alt="Departamento de Informatica UE" >
-        </div>
 
-        <hr>
-        <p id="copyright" >All content copyright &copy; Gonçalo Barradas and Andre Baião.</p>
     </footer>
     
     </body>

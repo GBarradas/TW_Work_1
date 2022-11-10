@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="pt-pt">
 <head>
   <meta charset="UTF-8">
@@ -6,25 +6,13 @@
   <meta name="author" content="Gonçalo Barradas, Andre Baião" />
   <title>NEEI | Portal do Alojamento</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/js/anuncios.js" ></script>
   <link rel="stylesheet" type="text/css" href="css/style.css" >
   <link rel="icon" href="img/favicon.ico"/>
 
 </head>
 <body>
     <header>
-        <nav>
-            <a href="/">
-                <img class="neei_logo" src="img/Logo_NEEI_Sem_Fundo_cortado.svg" alt="Logo NEEI" >
-                <div id="name"><h1>Portal do Alojamento</h1></div>
-            </a>
-            <ul>
-                <li><a href="#">Procurar...</a></li>
-                <li><a href="/anuncios.html">Anuncios</a></li>
-                <li><a href="/submit.html">Fazer Anuncio</a></li>
-                <li><a href="#">Area Reservada</a></li>
-
-            </ul>
-        </nav>
     </header>
 <!--Considerar main em vez de div id="main"-->
   <div id="main">
@@ -35,23 +23,20 @@
           </div>
           <div class="content-wraper"  >
               <div class="aba-content active">
-                  <form action="http://alunos.di.uevora.pt/tweb/t1/registaprocura" method="POST"  >
+                  <form class="grid2" action="http://alunos.di.uevora.pt/tweb/t1/registaprocura" method="POST"  >
                       <label>Nome:
                           <input type="text" name="anunciante" >
                           </label>
-                      <br>
-                      <label>Telemovel: <input type="tel" name="contacto"  ></label>
-                      <br>
                       <label>Genero:
-                              <select name="genero" required>
+                          <select name="genero" required>
                                   <option>Masculino</option>
                                   <option>Feminino</option>
                                   <option>Indiferente</option>
                               </select>
-                          </label>
-                      <br>
+                      </label>
+                      <label>Telemovel:<input type="tel" name="contacto"  ></label>
                       <label>
-                      Tipologia:
+                          Tipologia:
                           <select name="tipo_alojamento" required >
                                   <option>T0</option>
                                   <option>T1</option>
@@ -65,33 +50,32 @@
                               </select>
                       </label>
 
-                      <br>
                       <label>
                           Preço:
                           <input type="number"  name="preco" step="1" >
                       </label>
-                      <br>
+
                       <label>
                           Localização:
                           <input type="text" name="zona" >
                       </label>
-                      <br>
-                      <label>
-                          Imagem:
-                          <input type="file" name="image" >
-                      </label>
-                      <br>
+
                       <label>
                           Observações:
                           <textarea name="detalhes" rows="5" cols="30" placeholder="Coloque aqui os seu texto!!"></textarea>
                       </label>
-                      <br>
+
+                      <label>
+                          Imagem:
+                          <input type="file" name="image" >
+                      </label>
+
                       <input type="submit"  >
                       <input type="reset" >
                   </form>
               </div>
               <div class="aba-content">
-                  <form action="http://alunos.di.uevora.pt/tweb/t1/registaoferta" method="POST" >
+                  <form class="grid2" action="http://alunos.di.uevora.pt/tweb/t1/registaoferta" method="POST" >
                       <label> Nome:
                           <input type="text" name="anunciante">
                       </label>
@@ -139,7 +123,6 @@
                           Imagem:
                           <input type="file" name="image" >
                       </label>
-                      <br>
                       <label>
                           Observações:
                           <textarea name="detalhes" rows="5" cols="30" placeholder="Coloque aqui os seu texto!!"></textarea>
@@ -153,8 +136,11 @@
           </div>
       </div>
   </div>
+  <footer>
 
+  </footer>
   <script>
+      loadHF()
       const oferta = 'http://alunos.di.uevora.pt/tweb/t1/registaoferta';
       const procura= 'http://alunos.di.uevora.pt/tweb/t1/registaprocura';
       function changeAba(a){
