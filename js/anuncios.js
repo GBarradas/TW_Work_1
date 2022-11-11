@@ -97,7 +97,7 @@ function filtrarAnuncios(form){
     xhttp.onreadystatechange= function (){
     if (xhttp.readyState == XMLHttpRequest.DONE) {
                 let result = JSON.parse(xhttp.responseText).resultados
-
+                paginar(result)
         }
     }
     xhttp.open('POST',url,true)
@@ -117,7 +117,6 @@ function paginar(anun){
     resultados.empty()
     pagin.empty()
     mpages = Math.ceil(anun.length/4)
-    alert(anun+"\n"+mpages)
     pagin.append(getDivOption('«','pagOpt',1,'optfp'))
     pagin.append(getDivOption('<','pagOpt',1,'optpp'))
     pagin.append(getDivOption("Pagina <span id='actpage' >1</span> de <span id='npages' >"+mpages+"</span>",'pagInfo'))
@@ -127,10 +126,13 @@ function paginar(anun){
         let div = document.createElement('div')
         div.classList.add('grid2a');
         div.classList.add('page')
-        for(let j = 0; j< 4 ||(j+(i*4))>anun.length;j++){
-            let a = anun[(i*4)+j];
-            div.append(anuncioHTML())
+        for(let j = 0;j < 4;j++){
+            if(((i*4)+j )<anun.length){
+                let a = anun[((i*4)+j )];
+                div.append(anuncioHTML(a.aid,a.detalhes,a.tipo_alojamento,a.genero,a.zona, a.preco, a.anunciante))
+            }
         }
+        resultados.append(div)
     }
 
 }
@@ -140,6 +142,7 @@ function showPage(n){
     let optnp = $('#optnp')
     let actpage = $('#actpage')
     let npages = $('#npages')
+
 }
 function editOnclick(div, newopt){
     div.onclick = function (){

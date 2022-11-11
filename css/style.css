@@ -12,6 +12,14 @@
     padding: 0;
     font-family: 'Roboto', sans-serif;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type=number]{
+    -moz-appearance: textfield;
+}
 header{
     width:100%;
     height: var(--nav-height);
@@ -341,6 +349,6 @@ footer{
 .aba-content form textarea{
     clear: both;
     resize: none;
-    padding-left: 1%;
+    padding: 2%;
 }
 
