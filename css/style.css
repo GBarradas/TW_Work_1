@@ -359,6 +359,7 @@ aba-content form input[type=reset]{
     border: 1px solid black;
     border-radius: 10px;
     background: white;
+    padding-left: 2%;
 }
 .aba-content textarea{
     width:calc(100% - 2vh);
