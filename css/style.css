@@ -10,8 +10,17 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'ubuntu', sans-serif;
 }
+img{
+    border: 1px solid black;
+}
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -69,7 +78,8 @@ header nav ul li a:hover, header nav a:hover{
 #main{
     padding-top: calc( var(--nav-height) + 5vh);
     margin: 0 10vw;
-    margin-bottom: 5vw;
+    margin-bottom: 10vh;
+    padding-bottom: 1.5em;
 }
 
 /*
@@ -77,16 +87,10 @@ header nav ul li a:hover, header nav a:hover{
 */
 .anuncio{
     box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
+    overflow: hidden;
 }
 .anuncio:hover{
     box-shadow: inset 0 0 10px 0 rgba(0,0,0,0.25);
-}
-.grid3{
-    margin: 2vh 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 20px;
-    grid-row-gap: 25px;
 }
 .anuncio img{
     height: auto;
@@ -109,6 +113,13 @@ header nav ul li a:hover, header nav a:hover{
     font-weight: bold;
     color: #312e2e;
 }
+.grid3{
+    margin: 2vh 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 25px;
+}
 .grid4{
     margin: 2vh 0;
     display: grid;
@@ -119,11 +130,15 @@ header nav ul li a:hover, header nav a:hover{
 /*
 * Rodape
 */
+
 footer{
+    width: 97%;
+    margin-top: auto;
+    /*float: bottom;*/
+    bottom: 0;
     color: white;
     background-color: #3b3838;
     padding: 1.5vw;
-    bottom: 0;
     clear: both;
 }
 
@@ -161,6 +176,7 @@ footer{
     float: left;
     text-transform: uppercase;
     font-weight: bold;
+    font-size: 1.5em;
 }
 .select-wraper .aba-option *{
     padding: 1% 10%;
@@ -203,6 +219,7 @@ footer{
 #filtro{
     box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.25);
     padding: 2% 5%;
+    margin-bottom: 20px;
 }
 #filtro h1{
     margin-bottom: 3%;
@@ -224,6 +241,7 @@ footer{
 #search-form select{
     width: 100%;
     height: 4vh;
+    padding-left: 2%;
     margin-bottom: 10px;
     margin-top: 5px;
     border: 1px solid black;
@@ -231,15 +249,18 @@ footer{
     background: white;
 }
 .textinp{
-    width: 100%;
+    width: 98%;
     height: 3.8vh;
+    padding-left: 2%;
     margin-bottom: 10px;
     margin-top: 5px;
     border: 1px solid black;
     border-radius: 10px;
     background: white;
 }
-#search-form-options input{
+#search-form-options input,
+.aba-content form input[type=submit],
+aba-content form input[type=reset]{
     margin-top: 1.8em;
     width: 47.5%;
     height: 4vh;
@@ -289,15 +310,16 @@ footer{
 }
 .anuncio_unico img{
     float: left;
-    width: 50%;
+    margin-right: 2%;
+    max-width: 50%;
 }
 .ainfos_unico{
     font-size: 1.1em;
+    float: left;
 }
 .ainfos_unico .descricao{
     font-weight: bold;
     font-size: 1.3em;
-    padding-left: 5%;
 }
 .anuncio_unico form{
     clear: both;
@@ -328,9 +350,10 @@ footer{
     grid-row-gap: 25px;
     padding: 1vh 2vw;
 }
-.aba-content form input:not(input[type=file]),
+.aba-content form input:not(input[type=file],input[type=submit],input[type=reset]),
 .aba-content form select{
-    width: 100%;
+    width: calc(100% - 2%);
+    padding-left: 2% ;
     height: 4vh;
     margin-bottom: 10px;
     margin-top: 5px;
@@ -339,7 +362,7 @@ footer{
     background: white;
 }
 .aba-content textarea{
-    width: 100%;
+    width:96%;
     margin-bottom: 10px;
     margin-top: 5px;
     border: 1px solid black;
@@ -351,4 +374,118 @@ footer{
     resize: none;
     padding: 2%;
 }
+.aba-content form input[type=submit],
+.aba-content form input[type=reset]{
+    margin-top: 0;
+    width: 97.5%;
+    height: 4vh;
+    float: left;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 20px;
+    background: white;
+    font-weight: bold;
+    transition: 1s;
+}
+.aba-content form input[type=submit]:hover,
+.aba-content form input[type=reset]:hover{
+    color: white;
+    background: black;
+}
 
+/*Paginação*/
+.page{
+    display: none;
+}
+.page.active{
+    margin: 2vh 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 40px;
+    grid-row-gap: 30px;
+}
+
+/*----------Admin-----------------------------------*/
+.anuncioAdmin{
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
+    margin-bottom: 30px;
+}
+.anuncioAdmin img{
+    width: 50%;
+    margin-right: 2%;
+    float: left;
+}
+.anuncioAdmin .ainfosAdmin{
+    width: auto;
+    margin-top: 2%;
+    float: left;
+}
+.ainfosAdmin .descricao{
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.anuncioAdmin .aform{
+    clear: both;
+    padding: 10px 30px;
+    color: #312e2e;
+}
+.id-admin-form input , .estado-admin-form select,
+.form-cont input , .form-cont select{
+    padding: 0 2%;
+    width: 100%;
+    height: 4vh;
+    margin-top: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
+}
+.id-admin-form input,.form-cont input {
+    width: 96%;
+}
+.anuncioAdmin textarea,
+.form-cont textarea{
+    width: calc(100% - 20px);
+    height: 8vh;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
+    resize: none;
+}
+.anuncioAdmin .optForms input,
+.form-cont .optForms input{
+    width: 60%;
+    margin-left: 20%;
+    height: 4vh;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 20px;
+    background: white;
+    font-weight: bold;
+    transition: 1s;
+}
+.anuncioAdmin .optForms input:hover,
+.form-cont .optForms input:hover{
+    color: white;
+    background-color: black;
+}
+.form-cont {
+    padding-top: 1%;
+}
+.pageAdmin{
+    display: none;
+}
+.pageAdmin.active{
+    display: block;
+
+}
+#msg{
+    clear:both;
+    padding-top: 1%;
+}
+.remetente{
+    font-weight: bold;
+    font-size: 1.1em;
+}

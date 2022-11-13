@@ -23,21 +23,24 @@
           </div>
           <div class="content-wraper"  >
               <div class="aba-content active">
-                  <form class="grid2" action="http://alunos.di.uevora.pt/tweb/t1/registaprocura" method="POST"  >
+                  <form class="grid2" action="http://alunos.di.uevora.pt/tweb/t1/registaprocura" method="POST"
+                  onsubmit="return submitAnun(this)">
                       <label>Nome:
-                          <input type="text" name="anunciante" >
+                          <input type="text" name="anunciante" required >
                       </label>
                       <label>Genero:
                           <select name="genero" required>
+                              <option></option>
                                   <option>Masculino</option>
                                   <option>Feminino</option>
                                   <option>Indiferente</option>
                               </select>
                       </label>
-                      <label>Telemovel:<input type="tel" name="contacto"  ></label>
+                      <label>Telemovel:<input type="number" name="contacto"  required ></label>
                       <label>
                           Tipologia:
                           <select name="tipo_alojamento" required >
+                                <option></option>
                                   <option>T0</option>
                                   <option>T1</option>
                                   <option>T2</option>
@@ -52,17 +55,17 @@
 
                       <label>
                           Preço:
-                          <input type="number"  name="preco" step="1" >
+                          <input type="number"  name="preco" step="1" required >
                       </label>
 
                       <label>
                           Localização:
-                          <input type="text" name="zona" >
+                          <input type="text" name="zona" required >
                       </label>
 
                       <label>
                           Observações:
-                          <textarea name="detalhes" rows="5" cols="30" placeholder="Coloque aqui os seu texto!!"></textarea>
+                          <textarea name="detalhes" rows="5" cols="30" placeholder="Coloque aqui os seu texto!!" required></textarea>
                       </label>
 
                       <label>
@@ -75,22 +78,25 @@
                   </form>
               </div>
               <div class="aba-content">
-                  <form class="grid2" action="http://alunos.di.uevora.pt/tweb/t1/registaoferta" method="POST" >
+                  <form class="grid2" action="http://alunos.di.uevora.pt/tweb/t1/registaoferta" method="POST"
+                  onsubmit="return submitAnun(this)">
                       <label> Nome:
-                          <input type="text" name="anunciante">
+                          <input type="text" name="anunciante" required >
                       </label>
                       <label>Genero:
                           <select name="genero" required>
+                              <option></option>
                               <option>Masculino</option>
                               <option>Feminino</option>
                               <option>Casal</option>
                           </select>
                       </label>
-                      <label>Telemovel: <input type="tel" name="contacto"  ></label>
+                      <label>Telemovel: <input type="number" name="contacto" required ></label>
                       <label>
                           Tipologia:
                           <select name="tipo_alojamento" required >
                               <optgroup label="Apartamento">
+                                  <option></option>
                                   <option>T0</option>
                                   <option>T1</option>
                                   <option>T2</option>
@@ -107,15 +113,15 @@
                       </label>
                       <label>
                           Preço:
-                          <input type="number"  name="preco" step="1" >
+                          <input type="number"  name="preco" step="1" required >
                       </label>
                       <label>
                       Localização:
-                      <input type="text" name="zona" >
+                      <input type="text" name="zona" required >
                       </label>
                       <label>
                           Observações:
-                          <textarea name="detalhes" rows="5" cols="30" placeholder="Coloque aqui os seu texto!!"></textarea>
+                          <textarea name="detalhes" rows="5" cols="30" placeholder="Coloque aqui os seu texto!!" required ></textarea>
                       </label>
                       <label>
                           Imagem:

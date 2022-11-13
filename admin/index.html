@@ -1,10 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-pt">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Gonçalo Barradas, Andre Baião" />
+    <title>NEEI | Portal do Alojamento</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" >
+    <link rel="icon" href="/img/favicon.ico"/>
+    <script src="/js/anuncios.js" ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alasql@2"></script>
 </head>
 <body>
+    <header>
 
+    </header>
+    <div id="main">
+        <!--
+        <div id="filtro">
+            <h1>Pesquisar </h1>
+            <hr>
+            <form id="search-form" name="search-form" class="grid2" onsubmit="return filtrarAnuncios(this);">
+                <div>
+                    <label for="tipo">Tipo de Anuncio: </label><br>
+                    <select name="tipo" id="tipo">
+                        <option></option>
+                        <option value="oferta">Oferta</option>
+                        <option value="procura">Procura</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="zona">Zona: </label><br>
+                    <input name="zona" type="text" id="zona" class="textinp">
+
+                </div>
+                <div>
+                    <label for="anunciante">Anunciante: </label>
+                    <input name="anunciante" id="anunciante" class="textinp" type="text">
+                </div>
+                <div id="search-form-options">
+                    <input type="submit" value=" Filtrar ">
+                    <input type="reset" value=" Limpar ">
+                </div>
+            </form>
+        </div>
+        -->
+       <div id="changeAnnoun" >
+
+       </div>
+        <div id="paginacao">
+            <div class="pagOpt" id="optfp" >«</div>
+            <div class="pagOpt" id="optpp"><</div>
+            <div class="pagInfo" >
+                Pagina <span id="actpage"></span> de
+                <span id="npages"></span>
+            </div>
+            <div class="pagOpt" id="optnp" > > </div>
+            <div class="pagOpt" id="optlp">»</div>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+    <script>
+        loadHF()
+        loadToAdmin()
+    </script>
 </body>
 </html>

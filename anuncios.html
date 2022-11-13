@@ -7,8 +7,10 @@
     <title>NEEI | Portal do Alojamento</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css" >
     <link rel="icon" href="img/favicon.ico"/>
+    <script src="https://cdn.jsdelivr.net/npm/alasql@2"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/anuncios.js" ></script>
+
 </head>
 <body>
 <header>
@@ -41,7 +43,7 @@
             </div>
             <div id="search-form-options" >
                 <input type="submit" value=" Filtrar " >
-                <input type="reset" value=" Limpar " >
+                <input type="reset" value=" Limpar " onclick="getAnnoun()" >
             </div>
         </form>
     </div>
@@ -49,7 +51,14 @@
 
     </div>
     <div id="paginacao" >
-
+        <div class="pagOpt" id="optfp" >«</div>
+        <div class="pagOpt" id="optpp"><</div>
+        <div class="pagInfo" >
+            Pagina <span id="actpage"></span> de
+            <span id="npages"></span>
+        </div>
+        <div class="pagOpt" id="optnp" > > </div>
+        <div class="pagOpt" id="optlp">»</div>
     </div>
 </div>
 <footer>

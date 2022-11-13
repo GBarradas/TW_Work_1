@@ -4,7 +4,6 @@
 - Ter em Atenção o tamanho dos inputs para não dar merda
 
 ## Perguntar
-- Pedir para por anuncios ativos
-- Imagens e titulos nos anuncios
+- E necessário mais filtros? (genero, preço, ...)
 
   

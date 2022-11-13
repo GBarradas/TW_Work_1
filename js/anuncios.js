@@ -1,4 +1,11 @@
 const url = 'http://alunos.di.uevora.pt/tweb/t1/roomsearch'
+const urlProcura = 'http://alunos.di.uevora.pt/tweb/t1/registoprocura'
+const urlOferta = 'http://alunos.di.uevora.pt/tweb/t1/registaoferta'
+const urlgerAnun = 'http://alunos.di.uevora.pt/tweb/t1/gereanuncios'
+const urlctrAnun = 'http://alunos.di.uevora.pt/tweb/t1/controloanuncio'
+const urlAnun = 'http://alunos.di.uevora.pt/tweb/t1/anuncio'
+const urlMsg = 'http://alunos.di.uevora.pt/tweb/t1/mensagens'
+
 function get3() {
     let xhttp = new XMLHttpRequest();
     let ofer = $('#desOferta')
@@ -10,9 +17,9 @@ function get3() {
     xhttp.onload = function(){
 
         let oferta = JSON.parse(xhttp.responseText).resultados
-        //ordenar de forma a obeter os 3 anuncios
-        //-----------------------------------------
+        //console.log(oferta)
         let res = alasql("select * from  ? where estado='ativo' order by date limit 3",[oferta])
+        //console.log(res)
         for(f of res){
             ofer.append(anuncioHTML(f.aid,f.detalhes,f.tipo_alojamento,f.genero, f.zona, f.preco, f.anunciante))
         }
@@ -23,14 +30,36 @@ function get3() {
     xhttp2.send('tipo=procura')
     xhttp2.onload = function(){
         let procura = JSON.parse(xhttp2.responseText).resultados
-        //ordenar de forma a obeter os 3 anuncios
+        //console.log(procura)
         let res = alasql("select * from  ? where estado='ativo' order by date limit 3",[procura])
+        //console.log(res)
         for(f of res){
                 proc.append(anuncioHTML(f.aid,f.detalhes,f.tipo_alojamento,f.genero, f.zona, f.preco, f.anunciante))
 
         }
     }
 }
+
+
+function submitAnun(form){
+    let xhttp = new XMLHttpRequest()
+    xhttp.onload = function (){
+        alert(xhttp.responseText)
+    }
+    xhttp.open(form.method, form.action, true)
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    let args = ''
+    for(i of form){
+        if( i.type == 'submit'|| i.type == 'reset') {       // este if é para ignorar estes inputs
+            continue;
+        }
+        args += i.name + '='+ encodeuri( i.value.normalize('NFD').replace(/[\u0300-\u036f]/g, ''));+'&';
+    }
+    console.log(args.slice(0,-1))
+    xhttp.send(args.slice(0,-1))
+    return false;
+}
+
 function anuncioCTipo(aid,tipo,titlo,tipo_alojamento,genero,zona, preco, arrendatario, imgsrc='/img/default.png'){
     return anuncioHTML(aid,tipo.toUpperCase()+': '+titlo,tipo_alojamento,genero,zona, preco, arrendatario, imgsrc)
 }
@@ -46,7 +75,7 @@ function anuncioHTML(aid,titlo,tipo_alojamento,genero,zona, preco, arrendatario,
     let infodiv = document.createElement('div')
     infodiv.classList= 'ainfos'
     let titleh3 = document.createElement('h3')
-    titleh3.textContent = titlo
+    titleh3.textContent = "Titulo"
     infodiv.append(titleh3)
     for(i in labels){
         let idiv = document.createElement('div')
@@ -69,33 +98,39 @@ function anuncioHTML(aid,titlo,tipo_alojamento,genero,zona, preco, arrendatario,
 
 function getAnnoun(){
     let xhttp = new XMLHttpRequest()
+    let oferta
+    let procura
+    let xhttp2 = new XMLHttpRequest()
+    xhttp.onload = function (){
+        procura = JSON.parse(xhttp.responseText).resultados
+        for(p of procura){p.detalhes = 'PROCURA: '+p.detalhes}
+        if(xhttp2.readyState == XMLHttpRequest.DONE){
+            let res = alasql("select * from  ? where estado='ativo' order by date ",[oferta.concat(procura)])
+            paginar(res)
+        }
+    }
+    xhttp2.onload = function (){
+        oferta = JSON.parse(xhttp2.responseText).resultados
+        for(o of oferta){o.detalhes = 'OFERTA: '+o.detalhes}
+        if(xhttp.readyState == XMLHttpRequest.DONE){
+            let res = alasql("select * from  ? where estado='ativo' order by date ",[oferta.concat(procura)])
+            paginar(res)
+        }
+    }
 
     xhttp.open('POST', url, true)
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-    xhttp.send('tipo=oferta')
-    let procura
-    let oferta
-    xhttp.onload = function (){
-        oferta = JSON.parse(xhttp.responseText).resultados
-
-        paginar(oferta)
-
-    }
-    let xhttp2 = new XMLHttpRequest()
+    xhttp.send('tipo=procura')
 
     xhttp2.open('POST',url,true)
     xhttp2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-
-    xhttp2.send('tipo=procura')
-    xhttp2.onload = function (){
-        procura = JSON.parse(xhttp2.responseText).resultados
-    }
+    xhttp2.send('tipo=oferta')
 }
 
 function filtrarAnuncios(form){
     var xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange= function (){
-    if (xhttp.readyState == XMLHttpRequest.DONE) {
+    if (xhttp.readyState == XMLHttpRequest.DONE) {      //ata após o fim de xhttp.send(arg) para efetar a paginação
                 let result = JSON.parse(xhttp.responseText).resultados
                 paginar(result)
         }
@@ -103,62 +138,77 @@ function filtrarAnuncios(form){
     xhttp.open('POST',url,true)
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
     var arg = '';
-    arg += form['tipo'].name+'='+form['tipo'].value+'&';
-    arg += form['zona'].name+'='+form['zona'].value+'&';
-    arg += form['anunciante'].name+'='+form['anunciante'].value;
+    arg += 'tipo='+form['tipo'].value+'&';
+    arg += 'zona='+form['zona'].value+'&';
+    arg += 'anunciante='+form['anunciante'].value;
+    if(form['tipo'].value=='' && form['zona'].value=='' && form['anunciante'].value== ''){
+        getAnnoun()
+        return false
+    }
     xhttp.send(arg)
     return false
-
-
 }
 function paginar(anun){
+    console.log(anun)
     let resultados = $('#results')
     let pagin = $('#paginacao')
     resultados.empty()
-    pagin.empty()
-    mpages = Math.ceil(anun.length/4)
-    pagin.append(getDivOption('«','pagOpt',1,'optfp'))
-    pagin.append(getDivOption('<','pagOpt',1,'optpp'))
-    pagin.append(getDivOption("Pagina <span id='actpage' >1</span> de <span id='npages' >"+mpages+"</span>",'pagInfo'))
-    pagin.append(getDivOption('>','pagOpt',2,'optnp'))
-    pagin.append(getDivOption('»','pagOpt',mpages,'optlp'))
+    if(anun.length == 0){       //verifica e altera a paginação se o numero de resultados for 0
+        document.getElementById('npages').innerHTML= 0
+        document.getElementById('actpage').innerHTML = 0
+        return false
+    }
+    else{
+        mpages = Math.ceil(anun.length/4)       //faz o calculo do numero de paginas necessarias
+    }
+
+    document.getElementById('npages').innerHTML= mpages
     for(let i = 0; i <mpages;i++){
         let div = document.createElement('div')
-        div.classList.add('grid2a');
+        //div.classList.add('grid2a');
         div.classList.add('page')
         for(let j = 0;j < 4;j++){
-            if(((i*4)+j )<anun.length){
+            if(((i*4)+j )<anun.length){         // calculo para determinar a posição de um anuncio no array anun
                 let a = anun[((i*4)+j )];
                 div.append(anuncioHTML(a.aid,a.detalhes,a.tipo_alojamento,a.genero,a.zona, a.preco, a.anunciante))
             }
         }
         resultados.append(div)
     }
+    showPage(1);
+    editOnclick(document.getElementById('optfp'),1)
+    editOnclick(document.getElementById('optlp'),mpages)
 
 }
 function showPage(n){
-    let pagin = $('#paginacao')
-    let optpp = $('#optpp')
-    let optnp = $('#optnp')
-    let actpage = $('#actpage')
-    let npages = $('#npages')
+    let optpp = document.getElementById('optpp')
+    let optnp = document.getElementById('optnp')
+    let actpage = document.getElementById('actpage')
+    let npages = document.getElementById('npages').textContent
+    let act = document.querySelector('.page.active')
+    if(act != null)
+        act.classList='page'
+    document.querySelectorAll('.page')[n-1].classList.add('active')
+    if(n ==1){
+        editOnclick(optpp, 1)
+        editOnclick(optnp,n+1)
+    }
+    else if(n == npages){
+        editOnclick(optpp, n-1)
+        editOnclick(optnp,npages)
+    }
+    else{
+        editOnclick(optpp, n-1)
+        editOnclick(optnp,n+1)
+    }
+    actpage.innerHTML = n;
+
 
 }
 function editOnclick(div, newopt){
-    div.onclick = function (){
-        showPage(newopt)
-    }
+    div.setAttribute('onclick',`showPage(${newopt})`)
 }
-function getDivOption(text, cla,oncfun,id){
-    let div = document.createElement('div');
-    div.innerHTML = text;
-    div.classList = cla;
-    div.id= id;
-    div.onclick= function (){
-        showPage(oncfun)
-    };
-    return div
-}
+
 function loadHF(){
     let xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange = function (){
@@ -182,11 +232,230 @@ function loadAnnoun(){
     let url = window.location.search;
     let param = new URLSearchParams(url);
     let aid = param.get('aid');
+    if(aid == null){
+        window.location.replace('/404.html');
+    }
     let xhttp = new XMLHttpRequest()
     let imgsrc = '/img/default.png'
     xhttp.onload = function (){
         let anc = JSON.parse(xhttp.responseText).anuncio
-        console.log(anc)
+        if(anc == null || anc.estado == 'inativo'){
+            window.location.replace('/404.html');
+        }
+        document.getElementById('main').innerHTML=
+            "<div id=\" "+anc.aid+"\" class=\"anuncio_unico\">"+
+            "<h1>Title</h1>"+
+
+            "    <div class=\"ainfos_unico\">"+
+            "<img src=\"/img/default.png\" >"+
+            "        <div><span class=\"descricao\">Tipo de Alojamento : </span><span>"+anc.tipo_alojamento+"</span></div>"+
+            "        <div><span class=\"descricao\">Genero : </span><span>"+anc.genero+"</span></div>"+
+            "        <div><span class=\"descricao\">Zona : </span><span>"+anc.zona+"</span></div>"+
+            "        <div><span class=\"descricao\">Preço : </span><span>"+anc.preco+" €</span></div>"+
+            "        <div><span class=\"descricao\">Anunciante : </span><span>"+anc.anunciante+"</span></div>"+
+            "        <div><span class=\"descricao\">Contacto : </span><span>"+anc.contacto+"</span></div>"+
+            "        <div><span class=\"descricao\">Detalhes : </span><span>"+anc.detalhes+"</span></div>"+
+            "    </div>"+
+            "   <form class='form-cont' action=\" http://alunos.di.uevora.pt/tweb/t1/contactar\" method=\"POST\" " +
+            " onsubmit='return submitAnun(this)'>"+
+            "        <hr>"+
+            "            <h2>Contactar:</h2>" +
+            "            <div class='grid2' >" +
+            "               <label> Anuncio: <input type=\"number\" name=\"aid\" value=\""+anc.aid+"\" readonly ></label> "+
+            "               <label>O seu Nome: <input type=\"text\" name=\"remetente\" required >   </label> " +
+            "            </div> "+
+            "           <label for=\"menssagem\">Mensagem:</label>"+
+            "            <textarea id=\"menssagem\" name=\"msg\" rows=\"6\" cols=\"80\" placeholder=\"A sua Mensagem\" required ></textarea>" +
+            "            <div class='optForms' ><input  type= 'submit'></div> " +
+            " </form>"+
+            "</div>"
+
+    }
+    xhttp.open('post','http://alunos.di.uevora.pt/tweb/t1/anuncio',true)
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    xhttp.send(`aid=${aid}`)
+}
+
+
+
+function loadToAdmin (){
+    let xhttp = new XMLHttpRequest()
+    let ativo
+    let inativo
+    xhttp.onload= function () {
+        let res = JSON.parse(xhttp.responseText)
+        ativo = res.ativo;
+        inativo = res.inativo;
+        paginAdmin(ativo.concat(inativo));      //junta os ativo e os inativos
+    }
+
+    xhttp.open('POST', urlgerAnun, true)
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    xhttp.send()
+}
+
+function paginAdmin(anun){
+    let resultados = $('#changeAnnoun')
+    let pagin = $('#paginacao')
+    resultados.empty()
+    if(anun == null){
+        document.getElementById('npages').innerHTML= 0
+        document.getElementById('actpage').innerHTML = 0
+        return false
+    }
+    else{
+        mpages = Math.ceil(anun.length/4)
+    }
+
+    document.getElementById('npages').innerHTML= mpages
+    for(let i = 0; i <mpages;i++){
+        let div = document.createElement('div')
+        //div.classList.add('grid2a');
+        div.classList.add('pageAdmin')
+        for(let j = 0;j < 4;j++){
+            if(((i*4)+j )<anun.length){
+                let a = anun[((i*4)+j )];
+                div.append(createAdminAnun(a))
+            }
+        }
+        resultados.append(div)
+    }
+    showPageAdmin(1);
+    editOnclickAdmin(document.getElementById('optfp'),1)
+    editOnclickAdmin(document.getElementById('optlp'),mpages)
+}
+function createAdminAnun(aid){
+    let div = document.createElement('div')
+    let xhttp = new XMLHttpRequest();
+    xhttp.onload = function () {
+        let a = JSON.parse(xhttp.responseText).anuncio
+        //console.log(a.aid +' '+a.estado)
+        div.classList.add('anuncioAdmin')
+        div.id = a.aid
+        div.innerHTML =
+            "    <img src=\"/img/default.png\">\n" +
+            "        <div class=\"ainfosAdmin\">" +
+            "            <h2>Title</h2>\n" +
+            "            <div><span class=\"descricao\">Tipo de Alojamento : </span><span>" + a.tipo_alojamento + "</span></div>\n" +
+            "            <div><span class=\"descricao\">Genero : </span><span>" + a.genero + "</span></div>\n" +
+            "            <div><span class=\"descricao\">Zona : </span><span>" + a.zona + "</span></div>\n" +
+            "            <div><span class=\"descricao\">Preço : </span><span>" + a.preco + " €</span></div>\n" +
+            "            <div><span class=\"descricao\">Anunciante : </span><span>" + a.anunciante + "</span></div>\n" +
+            "            <div><span class=\"descricao\">Estado : </span><span>" + a.estado + "</span></div>\n" +
+            "            <div><span class=\"descricao\">Contacto : </span><span>" + a.contacto + "</span></div>\n" +
+            "            <div><span class=\"descricao\">Data : </span><span>" + a.data + "</span></div>\n" +
+            "        </div>\n" +
+            "            <div class=\"aform\">\n" +
+            "                <form class=\"anun-admin-form\" method=\"post\"\n" +
+            "                      action=\"http://alunos.di.uevora.pt/tweb/t1/controloanuncio                                                                                                                                                                                                                                                                                                                                                          \"" +
+            "                       onsubmit='return submitAnun(this)'>\n" +
+            "                    <div class=\"grid2\">\n" +
+            "                        <label class=\"id-admin-form\">Id:\n" +
+            "                            <input type=\"number\" name=\"aid\" value=\"" + a.aid + "\" readOnly></label>\n" +
+            "                        <label class=\"estado-admin-form\">\n" +
+            "                            Estado:\n" +
+            "                            <select id=\""+a.aid+"estado\"  name=\"estado\" required>\n" +
+            "                                <option value='ativo' >activo</option>\n" +
+            "                                <option value='inativo'>inactivo</option>\n" +
+            "                            </select>\n" +
+            "                        </label>\n" +
+            "                    </div>\n" +
+            "                    <label>Descrição:<br>\n" +
+            "                        <textarea name=\"descricao\">" + a.detalhes + "</textarea>\n" +
+            "                    </label>\n" +
+            "                    <div class=\"optForms\">\n" +
+            "                        <input type=\"submit\">\n" +
+            //"                            <input type=\"reset\">\n" +
+            "                    </div>\n" +
+            "                </form>\n" +
+            "            </div>\n"
+        document.getElementById(a.aid+'estado').value = a.estado
+    }
+    xhttp.open('post',urlAnun,true)
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    xhttp.send(`aid=${aid}`)
+    return div
+}
+function showPageAdmin(n){
+    let optpp = document.getElementById('optpp')
+    let optnp = document.getElementById('optnp')
+    let actpage = document.getElementById('actpage')
+    let npages = document.getElementById('npages').textContent
+    let act = document.querySelector('.pageAdmin.active')
+    if(act != null)
+        act.classList='pageAdmin'
+    document.querySelectorAll('.pageAdmin')[n-1].classList.add('active')
+    if(n ==1){
+        editOnclickAdmin(optpp, 1)
+        editOnclickAdmin(optnp,n+1)
+    }
+    else if(n == npages){
+        editOnclickAdmin(optpp, n-1)
+        editOnclickAdmin(optnp,npages)
+    }
+    else{
+        editOnclickAdmin(optpp, n-1)
+        editOnclickAdmin(optnp,n+1)
+    }
+    actpage.innerHTML = n;
+
+
+}
+function editOnclickAdmin(div, newopt){
+    div.setAttribute('onclick',`showPageAdmin(${newopt})`)
+}
+
+function loadAnunUser(){
+    let url = window.location.search;
+    let param = new URLSearchParams(url);
+    let aid = param.get('aid');
+    if(aid == null){
+        window.location.replace('/404.html');
+    }
+    let xhttp = new XMLHttpRequest()
+    let imgsrc = '/img/default.png'
+    xhttp.onload = function (){
+        let anc = JSON.parse(xhttp.responseText).anuncio
+        if(anc == null || anc.estado == 'inativo'){
+            window.location.replace('/404.html');
+        }
+        document.getElementById('main').innerHTML=
+            "<div id=\""+anc.aid+"\" class=\"anuncio_unico\">"+
+            "<h1>Title</h1>"+
+
+            "    <div class=\"ainfos_unico\">"+
+            "<img src=\"/img/default.png\" >"+
+            "        <div><span class=\"descricao\">Tipo de Alojamento : </span><span>"+anc.tipo_alojamento+"</span></div>"+
+            "        <div><span class=\"descricao\">Genero : </span><span>"+anc.genero+"</span></div>"+
+            "        <div><span class=\"descricao\">Zona : </span><span>"+anc.zona+"</span></div>"+
+            "        <div><span class=\"descricao\">Preço : </span><span>"+anc.preco+" €</span></div>"+
+            "        <div><span class=\"descricao\">Anunciante : </span><span>"+anc.anunciante+"</span></div>"+
+            "        <div><span class=\"descricao\">Contacto : </span><span>"+anc.contacto+"</span></div>"+
+            "        <div><span class=\"descricao\">Detalhes : </span><span>"+anc.detalhes+"</span></div>"+
+            "    </div>" +
+            "   <div id=\"msg\">"+
+            "        <hr>"+
+            "            <h2>Messagens:</h2>" +
+            "   </div>" +
+            "</div>"
+        let xhttp2 = new XMLHttpRequest();
+        xhttp2.onload = function (){
+            let allMsg = JSON.parse(xhttp2.responseText).msgs
+            for(m of allMsg){
+                let msg = document.createElement("p")
+                let remetente = document.createElement('span')
+                remetente.classList.add('remetente')
+                remetente.textContent = m.remetente+': '
+                msg.append(remetente)
+                let msgBody = document.createElement('span')
+                msgBody.textContent = m.msg
+                msg.append(msgBody)
+                $('#msg').append(msg)
+            }
+        }
+        xhttp2.open('post', urlMsg, true)
+        xhttp2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+        xhttp2.send(`aid=${aid}`)
     }
     xhttp.open('post','http://alunos.di.uevora.pt/tweb/t1/anuncio',true)
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
