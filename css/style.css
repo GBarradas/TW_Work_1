@@ -11,14 +11,16 @@
     margin: 0;
     padding: 0;
     font-family: 'ubuntu', sans-serif;
-}
-img{
-    border: 1px solid black;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 body{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+}
+*::-webkit-scrollbar{
+    display: none;
 }
 
 input::-webkit-outer-spin-button,
@@ -63,9 +65,11 @@ header nav ul li a:hover, header nav a:hover{
     height: calc( var(--nav-height)*0.8);
     float: left;
 }
+#menu-button{
+    opacity: 0;
+}
 
-
-#name{
+#name {
     position: relative;
     top: calc(var(--nav-height)/2 - 1.5em/2);
     float: left;
@@ -188,7 +192,6 @@ footer{
 
 }
 .content-wraper{
-    padding: 2% 5%;
     margin-top: 20px;
 }
 .content-wraper > div{
@@ -215,6 +218,7 @@ footer{
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 40px;
     grid-row-gap: 30px;
+    max-width: 100%;
 }
 #filtro{
     box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.25);
@@ -304,6 +308,7 @@ aba-content form input[type=reset]{
 .anuncio_unico{
     box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
     padding: 2% 5%;
+    overflow: hidden;
 }
 .anuncio_unico h1{
     font-size: 3em;
@@ -343,17 +348,11 @@ aba-content form input[type=reset]{
     color: #312e2e;
 }
 .aba-content form{
-    margin: 2vh 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 20px;
-    grid-row-gap: 25px;
     padding: 1vh 2vw;
 }
 .aba-content form input:not(input[type=file],input[type=submit],input[type=reset]),
 .aba-content form select{
-    width: calc(100% - 2%);
-    padding-left: 2% ;
+    width: calc(100% - 2vh);
     height: 4vh;
     margin-bottom: 10px;
     margin-top: 5px;
@@ -362,7 +361,7 @@ aba-content form input[type=reset]{
     background: white;
 }
 .aba-content textarea{
-    width:96%;
+    width:calc(100% - 2vh);
     margin-bottom: 10px;
     margin-top: 5px;
     border: 1px solid black;
@@ -372,7 +371,6 @@ aba-content form input[type=reset]{
 .aba-content form textarea{
     clear: both;
     resize: none;
-    padding: 2%;
 }
 .aba-content form input[type=submit],
 .aba-content form input[type=reset]{
@@ -409,13 +407,14 @@ aba-content form input[type=reset]{
 .anuncioAdmin{
     box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
     margin-bottom: 30px;
+    overflow: hidden;
 }
 .anuncioAdmin img{
     width: 50%;
-    margin-right: 2%;
     float: left;
 }
 .anuncioAdmin .ainfosAdmin{
+    margin-left: 20px;
     width: auto;
     margin-top: 2%;
     float: left;
@@ -485,7 +484,207 @@ aba-content form input[type=reset]{
     clear:both;
     padding-top: 1%;
 }
+#msg h2{
+    margin-bottom: 20px ;
+}
+#msg div{
+    border: 1px solid black;
+    margin-bottom: 5px;
+    padding: 5px  15px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
+    transition: 1s;
+}
+#msg div:hover{
+    zoom: 120%;
+    margin-left: 20px;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.5);
+}
 .remetente{
     font-weight: bold;
     font-size: 1.1em;
+}
+.container-login{
+    width: 50% ;
+    margin: 0 20%;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
+    overflow: hidden;
+    padding: 2% 5%;
+}
+.container-login img{
+    width: 50%;
+    margin-left: 25%;
+}
+
+.content-login input {
+    width: calc(100% - 5% );
+    padding: 0 2%;
+    margin-bottom: 10px;
+    height: 4vh;
+    margin-top: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
+}
+.container-login input[type=submit],
+.container-login input[type=reset]{
+    width: calc(50% - 10px);
+    margin-top: 1.8em;
+    margin-left: 10px;
+    height: 4vh;
+    float: left;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 20px;
+    background: white;
+    font-weight: bold;
+    transition: 1s;
+}
+.container-login input[type=submit]:hover,
+.container-login input[type=reset]:hover{
+    color: white;
+    background: black;
+}
+
+
+@media screen and (max-width: 1024px) and (min-width: 876px) {
+
+    #name{
+        font-size: calc( var(--nav-height)*0.4 * 1em) ;
+    }
+    .grid3{
+        grid-template-columns: 1fr 1fr;
+    }
+    .container-login {
+        width: 60%;
+        margin-left: 10%;
+    }
+}
+@media screen and (max-width: 876px) and (min-width: 632px) {
+
+    #name{
+        display: none;
+    }
+    .grid3, .page.active,.grid2{
+        grid-template-columns: 1fr;
+    }
+    .container-login {
+        width: 80%;
+        margin-left: 5%;
+    }
+    .ainfos_unico img,
+    .anuncioAdmin img{
+        max-width: 100%;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .ainfos_unico div{
+        clear: both;
+    }
+
+}
+
+@media  screen and (max-width: 632px) {
+    #name{
+        display: none;
+        font-size: calc( 1vw* 0.5em);
+    }
+    .neei_logo{
+        position: absolute;
+    }
+    .grid3, .page.active,.grid2{
+        grid-template-columns: 100%;
+    }
+    .container-login {
+        width: 80%;
+        margin-left: 5%;
+    }
+    .ainfos_unico img,
+    .anuncioAdmin img{
+        max-width: 100%;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .ainfos_unico div{
+        clear: both;
+    }
+    .select-wraper .aba-option{
+        font-size: 1.3em;
+    }
+    #options ul li{
+        display: none;
+    }
+    #menu-button{
+        margin-top: calc(var(--nav-height)/2 - 20px);
+        margin-right: 20px;
+        float: right;
+        cursor: pointer;
+        opacity: 100%;
+    }
+    .ham1 ,.ham2 ,.ham3 {
+        width: 35px;
+        height: 5px;
+        background-color: #333;
+        margin: 6px 0;
+        transition: 0.4s;
+    }
+    header{
+        min-height: var(--nav-height);
+        max-height: none;
+        height: auto;
+    }
+    .change .ham1 {
+        transform: translate(0, 11px) rotate(-45deg);
+    }
+    .change .ham2 {opacity: 0;}
+    .change .ham3 {
+        transform: translate(0, -11px) rotate(45deg);
+    }
+    #options ul{
+        transition: 1s ease-in-out;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        overflow: hidden;
+    }
+    #options.active ul{
+        width: 100%;
+        padding-top: var(--nav-height);
+        display: flex;
+        flex-direction: column;
+        top: 0;
+        margin-bottom: 10px;
+        overflow: hidden;
+        transition: 1s ease-out;
+    }
+    #options.active ul::-webkit-scrollbar {
+        display: none;
+    }
+    #options.active ul li{
+        width: 100%;
+        font-size: 1.5em;
+        display: block;
+        text-align: center;
+        height: 2vh;
+        padding: 30px 0px;
+    }
+}
+@media screen and (max-height: 500px ) {
+    .container-login input[type=submit],
+    .container-login input[type=reset],
+    .id-admin-form input , .estado-admin-form select,
+    .form-cont input , .form-cont select,
+    .aba-content form input:not(input[type=file],input[type=submit],input[type=reset]),
+    .aba-content form select,
+    #search-form-options input,
+    #search-form input,
+    #search-form select,
+    .aba-content form input[type=submit],
+    .aba-content form input[type=reset],
+    .container-login input,
+    .optForms input,
+    .container-login input[type=submit],
+    .container-login input[type=reset], input{
+        height: 30px !important;
+    }
+
 }

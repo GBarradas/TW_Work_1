@@ -18,7 +18,7 @@ function get3() {
 
         let oferta = JSON.parse(xhttp.responseText).resultados
         //console.log(oferta)
-        let res = alasql("select * from  ? where estado='ativo' order by date limit 3",[oferta])
+        let res = alasql("select * from  ? where estado='ativo' order by date desc limit 3",[oferta])
         //console.log(res)
         for(f of res){
             ofer.append(anuncioHTML(f.aid,f.detalhes,f.tipo_alojamento,f.genero, f.zona, f.preco, f.anunciante))
@@ -31,7 +31,7 @@ function get3() {
     xhttp2.onload = function(){
         let procura = JSON.parse(xhttp2.responseText).resultados
         //console.log(procura)
-        let res = alasql("select * from  ? where estado='ativo' order by date limit 3",[procura])
+        let res = alasql("select * from  ? where estado='ativo' order by date desc limit 3",[procura])
         //console.log(res)
         for(f of res){
                 proc.append(anuncioHTML(f.aid,f.detalhes,f.tipo_alojamento,f.genero, f.zona, f.preco, f.anunciante))
@@ -53,10 +53,10 @@ function submitAnun(form){
         if( i.type == 'submit'|| i.type == 'reset') {       // este if é para ignorar estes inputs
             continue;
         }
-        args += i.name + '='+ encodeuri( i.value.normalize('NFD').replace(/[\u0300-\u036f]/g, ''));+'&';
+        args += i.name + '='+ i.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '')+'&';
     }
-    console.log(args.slice(0,-1))
-    xhttp.send(args.slice(0,-1))
+    console.log(JSON.stringify(args))
+    xhttp.send((args.slice(0,-1)))
     return false;
 }
 
@@ -105,7 +105,7 @@ function getAnnoun(){
         procura = JSON.parse(xhttp.responseText).resultados
         for(p of procura){p.detalhes = 'PROCURA: '+p.detalhes}
         if(xhttp2.readyState == XMLHttpRequest.DONE){
-            let res = alasql("select * from  ? where estado='ativo' order by date ",[oferta.concat(procura)])
+            let res = alasql("select * from  ? where estado='ativo' order by date desc",[oferta.concat(procura)])
             paginar(res)
         }
     }
@@ -113,7 +113,7 @@ function getAnnoun(){
         oferta = JSON.parse(xhttp2.responseText).resultados
         for(o of oferta){o.detalhes = 'OFERTA: '+o.detalhes}
         if(xhttp.readyState == XMLHttpRequest.DONE){
-            let res = alasql("select * from  ? where estado='ativo' order by date ",[oferta.concat(procura)])
+            let res = alasql("select * from  ? where estado='ativo' order by date desc ",[oferta.concat(procura)])
             paginar(res)
         }
     }
@@ -442,13 +442,13 @@ function loadAnunUser(){
         xhttp2.onload = function (){
             let allMsg = JSON.parse(xhttp2.responseText).msgs
             for(m of allMsg){
-                let msg = document.createElement("p")
+                let msg = document.createElement("div")
                 let remetente = document.createElement('span')
                 remetente.classList.add('remetente')
                 remetente.textContent = m.remetente+': '
                 msg.append(remetente)
                 let msgBody = document.createElement('span')
-                msgBody.textContent = m.msg
+                msgBody.innerHTML = m.msg
                 msg.append(msgBody)
                 $('#msg').append(msg)
             }
@@ -460,4 +460,8 @@ function loadAnunUser(){
     xhttp.open('post','http://alunos.di.uevora.pt/tweb/t1/anuncio',true)
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
     xhttp.send(`aid=${aid}`)
+}
+function showHide(a){
+    a.classList.toggle("change");
+    document.getElementById('options').classList.toggle('active')
 }
