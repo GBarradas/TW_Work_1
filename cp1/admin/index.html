@@ -6,7 +6,7 @@
     <meta name="author" content="Gonçalo Barradas, Andre Baião" />
     <title>NEEI | Portal do Alojamento</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css" >
-    <link rel="icon" href="/img/favicon.ico"/>
+    <link rel="icon" href="../img/favicon.ico"/>
     <script src="/js/anuncios.js" ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alasql@2"></script>
@@ -16,9 +16,10 @@
 
     </header>
     <div id="main">
-        <div id="Announ" >
 
-        </div>
+       <div id="changeAnnoun" >
+
+       </div>
         <div id="paginacao">
             <div class="pagOpt" id="optfp" >«</div>
             <div class="pagOpt" id="optpp"><</div>
@@ -35,7 +36,7 @@
     </footer>
     <script>
         loadHF(true)
-        loadAllUserAnun('Jose')
+        loadToAdmin()
     </script>
 </body>
 </html>

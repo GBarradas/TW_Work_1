@@ -66,7 +66,7 @@ function anuncioHTML(a, imgsrc='/img/default.png'){
     let infos =[a.tipo,a.tipo_alojamento, a.genero, a.zona, a.preco+'€', a.anunciante]
     let maindiv = document.createElement('div')
     maindiv.id= a.aid;
-    maindiv.classList= 'anuncio'
+    maindiv.classList= 'anuncio box'
     let img = document.createElement('img')
     img.src = imgsrc
     maindiv.append(img)
@@ -265,7 +265,7 @@ function loadAnnoun(){
             alert('Anuncio não Encontrado')
         }
         document.getElementById('main').innerHTML=
-            "<div id=\" "+anc.aid+"\" class=\"anuncio_unico\">"+
+            "<div id=\" "+anc.aid+"\" class=\"anuncio_unico box\">"+
             "<h1>Title</h1>"+
 
             "    <div class=\"ainfos_unico\">"+
@@ -352,7 +352,7 @@ function createAdminAnun(aid){
     xhttp.onload = function () {
         let a = JSON.parse(xhttp.responseText).anuncio
         //console.log(a.aid +' '+a.estado)
-        div.classList.add('anuncioAdmin')
+        div.classList.add("anuncioAdmin","box")
         div.id = a.aid
         div.innerHTML =
             "    <img src=\"/img/default.png\">\n" +
