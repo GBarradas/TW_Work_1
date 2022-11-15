@@ -342,7 +342,7 @@ function paginAdmin(anun){
         }
         resultados.append(div)
     }
-    showPageAdmin(1);
+    showPageUser(1);
     editOnclickAdmin(document.getElementById('optfp'),1)
     editOnclickAdmin(document.getElementById('optlp'),mpages)
 }
@@ -392,13 +392,51 @@ function createAdminAnun(aid){
             "                </form>\n" +
             "            </div>\n"
         document.getElementById(a.aid+'estado').value = a.estado
+        div.innerHTML =
+            "    <img src=\"/img/default.png\">\n" +
+            "        <div class=\"ainfosAdmin\">" +
+            "            <h2>Title</h2>\n" +
+            "            <div><span class=\"descricao\">Tipo de Alojamento : </span><span>" + a.tipo_alojamento + "</span></div>\n" +
+            "            <div><span class=\"descricao\">Genero : </span><span>" + a.genero + "</span></div>\n" +
+            "            <div><span class=\"descricao\">Zona : </span><span>" + a.zona + "</span></div>\n" +
+            "            <div><span class=\"descricao\">Preço : </span><span>" + a.preco + " €</span></div>\n" +
+            "            <div><span class=\"descricao\">Anunciante : </span><span>" + a.anunciante + "</span></div>\n" +
+            "            <div><span class=\"descricao\">Estado : </span><span>" + a.estado + "</span></div>\n" +
+            "            <div><span class=\"descricao\">Contacto : </span><span>" + a.contacto + "</span></div>\n" +
+            "            <div><span class=\"descricao\">Data : </span><span>" + a.data + "</span></div>\n" +
+            "        </div>\n" +
+            "            <div class=\"aform\">\n" +
+            "                <form class=\"anun-admin-form\" method=\"post\"\n" +
+            "                      action=\"http://alunos.di.uevora.pt/tweb/t1/controloanuncio                                                                                                                                                                                                                                                                                                                                                          \"" +
+            "                       onsubmit='return submitAnun(this)'>\n" +
+            "                    <div class=\"grid2\">\n" +
+            "                        <label class=\"id-admin-form\">Id:\n" +
+            "                            <input type=\"number\" name=\"aid\" value=\"" + a.aid + "\" readOnly></label>\n" +
+            "                        <label class=\"estado-admin-form\">\n" +
+            "                            Estado:\n" +
+            "                            <select id=\""+a.aid+"estado\"  name=\"estado\" required>\n" +
+            "                                <option value='ativo' >activo</option>\n" +
+            "                                <option value='inativo'>inactivo</option>\n" +
+            "                            </select>\n" +
+            "                        </label>\n" +
+            "                    </div>\n" +
+            "                    <label>Descrição:<br>\n" +
+            "                        <textarea name=\"descricao\">" + a.detalhes + "</textarea>\n" +
+            "                    </label>\n" +
+            "                    <div class=\"optForms\">\n" +
+            "                        <input type=\"submit\">\n" +
+            //"                            <input type=\"reset\">\n" +
+            "                    </div>\n" +
+            "                </form>\n" +
+            "            </div>\n"
+        document.getElementById(a.aid+'estado').value = a.estado
     }
     xhttp.open('post',urlAnun,true)
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
     xhttp.send(`aid=${aid}`)
     return div
 }
-function showPageAdmin(n){
+function showPageUser(n){
     let optpp = document.getElementById('optpp')
     let optnp = document.getElementById('optnp')
     let actpage = document.getElementById('actpage')
@@ -424,7 +462,7 @@ function showPageAdmin(n){
 
 }
 function editOnclickAdmin(div, newopt){
-    div.setAttribute('onclick',`showPageAdmin(${newopt})`)
+    div.setAttribute('onclick',`showPageUser(${newopt})`)
 }
 
 function loadAnunUser(){
@@ -432,17 +470,19 @@ function loadAnunUser(){
     let param = new URLSearchParams(url);
     let aid = param.get('aid');
     if(aid == null){
-        alert('Anuncio não Encontrado')
+        window.alert('Anuncio não Encontrado')
+        window.location.href='/'
     }
     let xhttp = new XMLHttpRequest()
-    let imgsrc = '/img/default.png'
     xhttp.onload = function (){
         let anc = JSON.parse(xhttp.responseText).anuncio
-        if(anc == null || anc.estado == 'inativo'){
-            alert('Anuncio Não Encontrado')
+        console.log(anc)
+        if(anc == null ){
+            window.alert('Anuncio não Encontrado')
+            window.location.href='/'
         }
         document.getElementById('main').innerHTML=
-            "<div id=\""+anc.aid+"\" class=\"anuncio_unico\">"+
+            "<div id=\""+anc.aid+"\" class=\"anuncio_unico box\">"+
             "<h1>Title</h1>"+
 
             "    <div class=\"ainfos_unico\">"+
@@ -457,7 +497,7 @@ function loadAnunUser(){
             "    </div>" +
             "   <div id=\"msg\">"+
             "        <hr>"+
-            "            <h2>Messagens:</h2>" +
+            "            <h2>Menssagens:</h2>" +
             "   </div>" +
             "</div>"
         let xhttp2 = new XMLHttpRequest();
@@ -465,6 +505,7 @@ function loadAnunUser(){
             let allMsg = JSON.parse(xhttp2.responseText).msgs
             for(m of allMsg){
                 let msg = document.createElement("div")
+                msg.classList.add('box')
                 let remetente = document.createElement('span')
                 remetente.classList.add('remetente')
                 remetente.textContent = m.remetente+': '
@@ -478,15 +519,95 @@ function loadAnunUser(){
         xhttp2.open('post', urlMsg, true)
         xhttp2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
         xhttp2.send(`aid=${aid}`)
+
     }
     xhttp.open('post','http://alunos.di.uevora.pt/tweb/t1/anuncio',true)
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
     xhttp.send(`aid=${aid}`)
+
 }
 
 function loadAllUserAnun(user){
     let xhttp= new XMLHttpRequest()
+    let xhttp2 = new XMLHttpRequest()
+    let procura, oferta;
+    xhttp.onload = function (){
+        procura = JSON.parse(xhttp.responseText).resultados
+        for(p of procura){p.tipo = 'Procura'}
+        if(xhttp2.readyState == XMLHttpRequest.DONE){
+            let res = alasql("select * from  ? where estado='ativo' order by date desc",[oferta.concat(procura)])
+            paginarUser(res)
+        }
+    }
+    xhttp2.onload = function (){
+        oferta = JSON.parse(xhttp2.responseText).resultados
+        for(o of oferta){o.tipo = 'Oferta'}
+        if(xhttp.readyState == XMLHttpRequest.DONE){
+            let res = alasql("select * from  ? where estado='ativo' order by date desc ",[oferta.concat(procura)])
+            paginarUser(res)
+        }
+    }
+    xhttp.open('POST', url, true)
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    xhttp.send('tipo=procura&anunciante='+user)
 
+    xhttp2.open('POST',url,true)
+    xhttp2.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    xhttp2.send('tipo=oferta&anunciante='+user)
+
+}
+function paginarUser(anun){
+    let resultados = $('#Announ')
+    resultados.empty()
+    if(anun == null){
+        document.getElementById('npages').innerHTML= 0
+        document.getElementById('actpage').innerHTML = 0
+        return false
+    }
+    else{
+        mpages = Math.ceil(anun.length/4)
+    }
+
+    document.getElementById('npages').innerHTML= mpages
+    for(let i = 0; i <mpages;i++){
+        let div = document.createElement('div')
+        //div.classList.add('grid2a');
+        div.classList.add('pageAdmin')
+        for(let j = 0;j < 4;j++){
+            if(((i*4)+j )<anun.length){
+                let a = anun[((i*4)+j )];
+                div.append(userAnun(a))
+            }
+        }
+        resultados.append(div)
+    }
+    showPageUser(1);
+    editOnclickAdmin(document.getElementById('optfp'),1)
+    editOnclickAdmin(document.getElementById('optlp'),mpages)
+}
+function userAnun (a){
+    let div = document.createElement('div')
+    div.classList.add("anuncioAdmin","box")
+    div.id = a.aid
+    div.classList.add("anuncioAdmin","box")
+    div.id = a.aid
+    div.innerHTML =
+        "    <img src=\"/img/default.png\">\n" +
+        "        <div class=\"ainfosAdmin\">" +
+        "            <h2>Title</h2>\n" +
+        "            <div><span class=\"descricao\">Tipo de Alojamento : </span><span>" + a.tipo_alojamento + "</span></div>\n" +
+        "            <div><span class=\"descricao\">Genero : </span><span>" + a.genero + "</span></div>\n" +
+        "            <div><span class=\"descricao\">Zona : </span><span>" + a.zona + "</span></div>\n" +
+        "            <div><span class=\"descricao\">Preço : </span><span>" + a.preco + " €</span></div>\n" +
+        "            <div><span class=\"descricao\">Anunciante : </span><span>" + a.anunciante + "</span></div>\n" +
+        "            <div><span class=\"descricao\">Estado : </span><span>" + a.estado + "</span></div>\n" +
+        "            <div><span class=\"descricao\">Contacto : </span><span>" + a.contacto + "</span></div>\n" +
+        "            <div><span class=\"descricao\">Data : </span><span>" + a.data + "</span></div>\n" +
+        "        </div>\n"
+    div.onclick = function (){
+        window.location.href = '/utilizador/anuncio.html?aid='+a.aid;
+    }
+    return div
 }
 function showHide(a){
     a.classList.toggle("change");

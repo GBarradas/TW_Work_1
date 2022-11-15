@@ -251,9 +251,17 @@ footer{
     margin-bottom: 1%;
     width: 60%;
 }
-#filtro hr{
-    border: 1px solid black;
+#filOpts{
+    padding-top: 10px;
     display: none;
+}
+#filOpts.active{
+    display: block;
+    transition: 1s;
+    animation: backwards;
+}
+#filOpts hr{
+    border: 1px solid black;
 }
 #filtro-controlo{
     float: right;
@@ -272,18 +280,9 @@ footer{
     margin-top: 15px ;
     transform: rotate(225deg);
 }
-.grid2.active, #search-form.active{
-    display: grid;
-    transition: 1s ease-in-out;
-}
-#filtro.active hr{
-    margin-top: 20px;
-    display: block;
-}
+
 #search-form{
     padding: 1vh 2vw;
-    display: none;
-    transition: 1s ease-in-out;
 }
 #search-form label{
     width: 100%;
@@ -325,6 +324,10 @@ footer{
     width: 15%;
     float: left;
     padding: 2% 0%;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
 }
 #paginacao .pagOpt:hover{
     background: #c9cdd3;
@@ -333,6 +336,7 @@ footer{
     width: 40%;
     float: left;
     padding: 2% 0%;
+
 }
 /*-------------------------------
         Anuncio_unico
@@ -488,12 +492,15 @@ footer{
 #msg h2{
     margin-bottom: 20px ;
 }
+#msg hr{
+    border: 1px solid black;
+}
 #msg div{
     border: 1px solid black;
     margin-bottom: 5px;
     padding: 5px  15px;
     border-radius: 15px;
-    transition: 1s;
+    transition: 0.4s;
 }
 #msg div:hover{
     zoom: 120%;
@@ -521,15 +528,12 @@ footer{
     margin-bottom: 10px;
     height: 4vh;
     margin-top: 10px;
-    border: 1px solid black;
-    border-radius: 10px;
-    background: white;
 }
 .container-login input[type=submit],
 .container-login input[type=reset]{
     width: calc(50% - 10px);
     margin-top: 1.8em;
-    margin-left: 10px;
+    margin-right: 10px;
     height: 4vh;
     float: left;
     margin-bottom: 10px;
@@ -576,13 +580,18 @@ footer{
 @media  screen and (max-width: 632px) {
     #name{
         display: none;
-        font-size: calc( 1vw* 0.5em);
     }
     .neei_logo{
         position: absolute;
     }
     .grid3, .page.active,.grid2{
         grid-template-columns: 100%;
+    }
+    #filtro{
+        padding-bottom: 4%;
+    }
+    #filOpts.active{
+        padding-top: 15px;
     }
     .container-login {
         width: 80%;
@@ -622,6 +631,11 @@ footer{
         max-height: none;
         height: auto;
         z-index: 100;
+    }
+    .container-login input[type=submit],
+    .container-login input[type=reset]{
+        width: 100%;
+        margin: 10px 0;
     }
     .change .ham1 {
         transform: translate(0, 11px) rotate(-45deg);

@@ -22,55 +22,58 @@
     <div id="filtro" class="box" >
         <div id="filtro-controlo" onclick="showFilter(this)" ></div>
         <h1>Filtrar </h1>
-        <hr>
-        <form id="search-form" name ="search-form" class="grid2"
-              onsubmit="return filtrarAnuncios(this);" >
-            <div>
-                <label for="tipo" >Tipo de Anuncio: </label><br>
-                <select name="tipo" id="tipo" required>
-                    <option></option>
-                    <option value="oferta" >Oferta</option>
-                    <option value="procura">Procura</option>
-                </select>
-            </div>
-            <div>
-                <label for="zona" >Zona: </label><br>
-                <input name="zona" type="text"  id="zona" class="textinp" >
+        <div id="filOpts" >
+            <hr>
+            <form id="search-form" name ="search-form" class="grid2"
+                  onsubmit="return filtrarAnuncios(this);" >
+                <div>
+                    <label for="tipo" >Tipo de Anuncio: </label><br>
+                    <select name="tipo" id="tipo" required>
+                        <option></option>
+                        <option value="oferta" >Oferta</option>
+                        <option value="procura">Procura</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="zona" >Zona: </label><br>
+                    <input name="zona" type="text"  id="zona" class="textinp" >
 
-            </div>
-            <div>
-                <label for="anunciante" >Anunciante: </label>
-                <input name="anunciante" id="anunciante" class="textinp" type="text" >
-            </div>
-            <div>
-                <label for="tipo_alojamento" >Tipo de Alojamento</label>
-                <select name="tipo_alojamento" id="tipo_alojamento" >
-                    <option value=""></option>
-                    <option value="T0">T0</option>
-                    <option value="T1">T1</option>
-                    <option value="T2">T2</option>
-                    <option value="T3">T3</option>
-                    <option value="T4">T4</option>
-                    <option value="T5">T5</option>
-                    <option value="T6">T6</option>
-                    <option value="Quarto">Quarto</option>
+                </div>
+                <div>
+                    <label for="anunciante" >Anunciante: </label>
+                    <input name="anunciante" id="anunciante" class="textinp" type="text" >
+                </div>
+                <div>
+                    <label for="tipo_alojamento" >Tipo de Alojamento</label>
+                    <select name="tipo_alojamento" id="tipo_alojamento" >
+                        <option value=""></option>
+                        <option value="T0">T0</option>
+                        <option value="T1">T1</option>
+                        <option value="T2">T2</option>
+                        <option value="T3">T3</option>
+                        <option value="T4">T4</option>
+                        <option value="T5">T5</option>
+                        <option value="T6">T6</option>
+                        <option value="Quarto">Quarto</option>
 
-                </select>
-            </div>
-            <div>
-                <label for="genero" >Genero:</label>
-                <select name="genero" id="genero" >
-                    <option></option>
-                    <option>Masculino</option>
-                    <option>Feminino</option>
-                    <option>Indiferente</option>
-                </select>
-            </div>
-            <div id="search-form-options" >
-                <input type="submit" value=" Filtrar " >
-                <input type="reset" value=" Limpar " onclick="getAnnoun()" >
-            </div>
-        </form>
+                    </select>
+                </div>
+                <div>
+                    <label for="genero" >Genero:</label>
+                    <select name="genero" id="genero" >
+                        <option></option>
+                        <option>Masculino</option>
+                        <option>Feminino</option>
+                        <option>Indiferente</option>
+                    </select>
+                </div>
+                <div id="search-form-options" >
+                    <input type="submit" value=" Filtrar " >
+                    <input type="reset" value=" Limpar " onclick="getAnnoun()" >
+                </div>
+            </form>
+        </div>
+
     </div>
     <div id="results">
 
@@ -94,8 +97,8 @@
     getAnnoun()
     function showFilter(f){
         f.classList.toggle('active')
-        document.getElementById('search-form').classList.toggle('active')
-        document.getElementById('filtro').classList.toggle('active')
+        //document.getElementById('search-form').classList.toggle('active')
+        document.getElementById('filOpts').classList.toggle('active')
     }
 </script>
 </body>
