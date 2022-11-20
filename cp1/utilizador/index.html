@@ -1,41 +1,52 @@
 <!DOCTYPE html>
 <html lang="pt-pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="Gonçalo Barradas, Andre Baião" />
-    <title>NEEI | Portal do Alojamento</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css" >
-    <link rel="icon" href="../img/favicon.ico"/>
-    <script src="/js/anuncios.js" ></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alasql@2"></script>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="author" content="Gonçalo Barradas, Andre Baião" />
+        <title>NEEI | Portal do Alojamento</title>
+        <link rel="stylesheet" type="text/css" href="/css/style.css" >
+        <link rel="icon" href="img/favicon.ico"/>
+        <script src="js/anuncios.js" ></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/alasql@2"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    </head>
+    <body>
     <header>
 
     </header>
+    <!--Considerar main em vez de div id="main"-->
     <div id="main">
-        <div id="Announ" >
+        <h1>Oferta </h1>
+        <div id="desOferta" class="grid3" >
+
+
+
 
         </div>
-        <div id="paginacao" class="box" >
-            <div class="pagOpt" id="optfp" >«</div>
-            <div class="pagOpt" id="optpp"><</div>
-            <div class="pagInfo" >
-                Pagina <span id="actpage"></span> de
-                <span id="npages"></span>
-            </div>
-            <div class="pagOpt" id="optnp" > > </div>
-            <div class="pagOpt" id="optlp">»</div>
+        <h1>Procura</h1>
+        <div id="desProcura" class="grid3">
+
         </div>
+
     </div>
+
+
+
+
+
+
+
+    </div>
+    <script>
+        loadHF()
+        get3()
+    </script>
     <footer>
 
     </footer>
-    <script>
-        loadHF(true)
-        loadAllUserAnun('Jose')
-    </script>
-</body>
+    
+    </body>
 </html>
