@@ -224,7 +224,7 @@ function loadHF(user="false"){
         if(this.readyState == 4 && this.status == 200){
             document.querySelector('header').innerHTML = this.responseText
             if(user == true){
-                document.getElementById('user').innerText = "Ola, José"
+                document.getElementById('user').innerText = "Ola, User"
             }
         }
     }
