@@ -27,9 +27,32 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
-
+input[type=submit],
+input[type=reset]{
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 20px;
+    background: white;
+    font-weight: bold;
+    transition: 1s;
+}
+input[type=submit]:hover,
+input[type=reset]:hover{
+    background-color: black;
+    color: white;
+}
 input[type=number]{
     -moz-appearance: textfield;
+}
+input:not(input[type=file],input[type=submit],input[type=reset],.input-box input),
+select{
+    height: 4vh;
+    padding-left: 2%;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
 }
 header{
     width:100%;
@@ -39,7 +62,8 @@ header{
     position: fixed;
     background-color: white;
     justify-content: flex-end;
-    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
+    z-index: 100;
 }
 header nav ul{
     list-style-type: none;
@@ -89,8 +113,10 @@ header nav ul li a:hover, header nav a:hover{
 /*
 * Anuncios
 */
-.anuncio{
+.box{
     box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
+}
+.anuncio{
     overflow: hidden;
 }
 .anuncio:hover{
@@ -120,7 +146,7 @@ header nav ul li a:hover, header nav a:hover{
 .grid3{
     margin: 2vh 0;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 33% 33% 33%;
     grid-column-gap: 20px;
     grid-row-gap: 25px;
 }
@@ -138,7 +164,6 @@ header nav ul li a:hover, header nav a:hover{
 footer{
     width: 97%;
     margin-top: auto;
-    /*float: bottom;*/
     bottom: 0;
     color: white;
     background-color: #3b3838;
@@ -167,28 +192,30 @@ footer{
 * Abas
 */
 .container{
-    box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.25);
-
     clear: both;
 }
 .select-wraper .aba-option{
     background-color: rgba(0,0,0,1);
     color: white;
-    border-bottom: 3px solid rgba(0,0,0,0.25);
+    border-bottom: 3px solid transparent;
     width: 50%;
     display: inline-block;
     float: left;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 1.5em;
+    box-shadow: 0 0 25px 0 rgba(0,0,0,0.25);
 }
 .select-wraper .aba-option *{
     padding: 1% 10%;
 }
 .select-wraper .aba-option.active{
-    background-color: white;
+    background-color: transparent;
     color:black;
-    border-bottom: 3px solid white
+    border-bottom: 3px solid transparent;
+    z-index: 0;
+    box-shadow: none;
+    transition: .5s;
 
 }
 .content-wraper{
@@ -222,7 +249,6 @@ footer{
     max-width: 100%;
 }
 #filtro{
-    box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.25);
     padding: 2% 5%;
     margin-bottom: 20px;
 }
@@ -230,9 +256,17 @@ footer{
     margin-bottom: 1%;
     width: 60%;
 }
-#filtro hr{
-    border: 1px solid black;
+#filOpts{
+    padding-top: 10px;
     display: none;
+}
+#filOpts.active{
+    display: block;
+    transition: 1s;
+    animation: backwards;
+}
+#filOpts hr{
+    border: 1px solid black;
 }
 #filtro-controlo{
     float: right;
@@ -251,18 +285,9 @@ footer{
     margin-top: 15px ;
     transform: rotate(225deg);
 }
-.grid2.active, #search-form.active{
-    display: grid;
-    transition: 1s ease-in-out;
-}
-#filtro.active hr{
-    margin-top: 20px;
-    display: block;
-}
+
 #search-form{
     padding: 1vh 2vw;
-    display: none;
-    transition: 1s ease-in-out;
 }
 #search-form label{
     width: 100%;
@@ -273,12 +298,7 @@ footer{
 #search-form select{
     width: 100%;
     height: 4vh;
-    padding-left: 2%;
-    margin-bottom: 10px;
-    margin-top: 5px;
-    border: 1px solid black;
-    border-radius: 10px;
-    background: white;
+
 }
 .textinp{
     width: 98%;
@@ -290,29 +310,17 @@ footer{
     border-radius: 10px;
     background: white;
 }
-#search-form-options input,
-.aba-content form input[type=submit],
-aba-content form input[type=reset]{
+#search-form-options input{
     margin-top: 1.8em;
     width: 47.5%;
     height: 4vh;
     float: left;
-    margin-bottom: 10px;
-    border: 2px solid black;
-    border-radius: 20px;
-    background: white;
-    font-weight: bold;
-    transition: 1s;
-}
-#search-form-options input:hover{
-    color: white;
-    background: black;
+
 }
 #search-form-options input[type='submit']{
     margin-right:5%;
 }
 #paginacao{
-    box-shadow: 10px 10px 20px 0 rgba(0,0,0,0.25);
     width: 100%;
     display: inline-block;
     text-align: center;
@@ -321,6 +329,10 @@ aba-content form input[type=reset]{
     width: 15%;
     float: left;
     padding: 2% 0%;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
 }
 #paginacao .pagOpt:hover{
     background: #c9cdd3;
@@ -329,12 +341,12 @@ aba-content form input[type=reset]{
     width: 40%;
     float: left;
     padding: 2% 0%;
+
 }
 /*-------------------------------
         Anuncio_unico
  */
 .anuncio_unico{
-    box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
     padding: 2% 5%;
     overflow: hidden;
 }
@@ -381,13 +393,7 @@ aba-content form input[type=reset]{
 .aba-content form input:not(input[type=file],input[type=submit],input[type=reset]),
 .aba-content form select{
     width: calc(100% - 2vw);
-    height: 4vh;
-    margin-bottom: 10px;
-    margin-top: 5px;
-    border: 1px solid black;
-    border-radius: 10px;
-    background: white;
-    padding-left: 2%;
+
 }
 .aba-content textarea{
     width:calc(100% - 4% - 2vw);
@@ -407,17 +413,8 @@ aba-content form input[type=reset]{
     height: 4vh;
     float: left;
     margin-bottom: 10px;
-    border: 2px solid black;
-    border-radius: 20px;
-    background: white;
-    font-weight: bold;
-    transition: 1s;
 }
-.aba-content form input[type=submit]:hover,
-.aba-content form input[type=reset]:hover{
-    color: white;
-    background: black;
-}
+
 
 /*Paginação*/
 .page{
@@ -433,7 +430,6 @@ aba-content form input[type=reset]{
 
 /*----------Admin-----------------------------------*/
 .anuncioAdmin{
-    box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
     margin-bottom: 30px;
     overflow: hidden;
 }
@@ -458,13 +454,8 @@ aba-content form input[type=reset]{
 }
 .id-admin-form input , .estado-admin-form select,
 .form-cont input , .form-cont select{
-    padding: 0 2%;
     width: 100%;
-    height: 4vh;
-    margin-top: 10px;
-    border: 1px solid black;
-    border-radius: 10px;
-    background: white;
+
 }
 .id-admin-form input,.form-cont input {
     width: 96%;
@@ -480,24 +471,22 @@ aba-content form input[type=reset]{
     background: white;
     resize: none;
 }
-.anuncioAdmin .optForms input,
-.form-cont .optForms input{
+.optFormsAdmin input{
     width: 60%;
+    height: 4vh;
     margin-left: 20%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 4vh;
+}
+.form-cont .optForms input{
+    width: 46%;
+    margin: 0 2%;
     height: 4vh;
     margin-top: 10px;
     margin-bottom: 10px;
-    border: 2px solid black;
-    border-radius: 20px;
-    background: white;
-    font-weight: bold;
-    transition: 1s;
 }
-.anuncioAdmin .optForms input:hover,
-.form-cont .optForms input:hover{
-    color: white;
-    background-color: black;
-}
+
 .form-cont {
     padding-top: 1%;
 }
@@ -515,13 +504,15 @@ aba-content form input[type=reset]{
 #msg h2{
     margin-bottom: 20px ;
 }
+#msg hr{
+    border: 1px solid black;
+}
 #msg div{
     border: 1px solid black;
     margin-bottom: 5px;
     padding: 5px  15px;
     border-radius: 15px;
-    box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
-    transition: 1s;
+    transition: 0.4s;
 }
 #msg div:hover{
     zoom: 120%;
@@ -533,9 +524,8 @@ aba-content form input[type=reset]{
     font-size: 1.1em;
 }
 .container-login{
-    width: 50% ;
-    margin: 0 20%;
-    box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
+    max-width: 50% ;
+    margin: 0 25%;
     overflow: hidden;
     padding: 2% 5%;
 }
@@ -550,28 +540,15 @@ aba-content form input[type=reset]{
     margin-bottom: 10px;
     height: 4vh;
     margin-top: 10px;
-    border: 1px solid black;
-    border-radius: 10px;
-    background: white;
 }
 .container-login input[type=submit],
 .container-login input[type=reset]{
     width: calc(50% - 10px);
     margin-top: 1.8em;
-    margin-left: 10px;
+    margin-right: 10px;
     height: 4vh;
     float: left;
     margin-bottom: 10px;
-    border: 2px solid black;
-    border-radius: 20px;
-    background: white;
-    font-weight: bold;
-    transition: 1s;
-}
-.container-login input[type=submit]:hover,
-.container-login input[type=reset]:hover{
-    color: white;
-    background: black;
 }
 
 
@@ -584,8 +561,9 @@ aba-content form input[type=reset]{
         grid-template-columns: 1fr 1fr;
     }
     .container-login {
+        max-width: 60%;
         width: 60%;
-        margin-left: 10%;
+        margin-left: 15%;
     }
 }
 @media screen and (max-width: 876px) and (min-width: 632px) {
@@ -597,6 +575,7 @@ aba-content form input[type=reset]{
         grid-template-columns: 1fr;
     }
     .container-login {
+        max-width: 80%;
         width: 80%;
         margin-left: 5%;
     }
@@ -615,7 +594,6 @@ aba-content form input[type=reset]{
 @media  screen and (max-width: 632px) {
     #name{
         display: none;
-        font-size: calc( 1vw* 0.5em);
     }
     .neei_logo{
         position: absolute;
@@ -623,7 +601,14 @@ aba-content form input[type=reset]{
     .grid3, .page.active,.grid2{
         grid-template-columns: 100%;
     }
+    #filtro{
+        padding-bottom: 4%;
+    }
+    #filOpts.active{
+        padding-top: 15px;
+    }
     .container-login {
+        max-width: 80%;
         width: 80%;
         margin-left: 5%;
     }
@@ -660,7 +645,11 @@ aba-content form input[type=reset]{
         min-height: var(--nav-height);
         max-height: none;
         height: auto;
-        z-index: 100;
+    }
+    .container-login input[type=submit],
+    .container-login input[type=reset]{
+        width: 100%;
+        margin: 10px 0;
     }
     .change .ham1 {
         transform: translate(0, 11px) rotate(-45deg);
@@ -698,21 +687,8 @@ aba-content form input[type=reset]{
     }
 }
 @media screen and (max-height: 600px ) {
-    .container-login input[type=submit],
-    .container-login input[type=reset],
-    .id-admin-form input , .estado-admin-form select,
-    .form-cont input , .form-cont select,
-    .aba-content form input:not(input[type=file],input[type=submit],input[type=reset]),
-    .aba-content form select,
-    #search-form-options input,
-    #search-form input,
-    #search-form select,
-    .aba-content form input[type=submit],
-    .aba-content form input[type=reset],
-    .container-login input,
-    .optForms input,
-    .container-login input[type=submit],
-    .container-login input[type=reset], input{
+    input, select{
         height: 30px !important;
     }
+
 }

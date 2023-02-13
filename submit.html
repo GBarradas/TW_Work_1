@@ -10,13 +10,14 @@
   <link rel="stylesheet" type="text/css" href="css/style.css" >
   <link rel="icon" href="img/favicon.ico"/>
 
+
 </head>
 <body>
     <header>
     </header>
 <!--Considerar main em vez de div id="main"-->
   <div id="main">
-      <div class="container" >
+      <div class="container box" >
           <div class="select-wraper" >
               <div class="aba-option active" onclick="changeAba(this)" ><h3>Procura</h3></div>
               <div class="aba-option" onclick="changeAba(this)" ><h3>Oferta</h3></div>
@@ -33,10 +34,9 @@
                               <option></option>
                                   <option>Masculino</option>
                                   <option>Feminino</option>
-                                  <option>Indiferente</option>
                               </select>
                       </label>
-                      <label>Telemovel:<input type="number" name="contacto"  required ></label>
+                      <label>Telemovel:<input type="tel" name="contacto" maxlength="9"  required ></label>
                       <label>
                           Tipo de Alojamento:
                           <select name="tipo_alojamento" required >
@@ -73,8 +73,8 @@
                           <input type="file" name="image" >
                       </label>
 
-                      <input type="submit"  >
-                      <input type="reset" >
+                      <input type="submit" value="Enviar"  >
+                      <input type="reset" value="Limpar" >
                   </form>
               </div>
               <div class="aba-content">
@@ -91,7 +91,7 @@
                               <option>Casal</option>
                           </select>
                       </label>
-                      <label>Telemovel: <input type="number" name="contacto" required ></label>
+                      <label>Telemovel: <input type="tel" name="contacto" maxlength="9" required ></label>
                       <label>
                           Tipo de Alojamento:
                           <select name="tipo_alojamento" required >
@@ -128,7 +128,7 @@
                           <input type="file" name="image" >
                       </label>
                       <input type="submit" value="Enviar">
-                      <input type="reset" >
+                      <input type="reset" value="Limpar">
                   </form>
               </div>
           </div>
