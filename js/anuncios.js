@@ -57,7 +57,7 @@ function submitAnun(form){
     xhttp.send((args.slice(0,-1)))
     return false;
 }
-function anuncioHTML(a, imgsrc='/img/default.png'){
+function anuncioHTML(a, imgsrc='/TW_Work_1/img/default.png'){
     let labels = ['Tipo de Anuncio', 'Tipo de Alojamento','Genero','Zona','Preço', 'Anunciante']
     let infos =[a.tipo,a.tipo_alojamento, a.genero, a.zona, a.preco+'€', a.anunciante]
     let maindiv = document.createElement('div')
@@ -228,7 +228,7 @@ function loadHF(user="false"){
             }
         }
     }
-    xhttp.open("GET","/header.html", true)
+    xhttp.open("GET","/TW_Work_1/header.html", true)
     xhttp.send()
 
     let xhttp2 = new XMLHttpRequest()
@@ -237,7 +237,7 @@ function loadHF(user="false"){
             document.querySelector('footer').innerHTML = this.responseText
         }
     }
-    xhttp2.open("GET","/footer.html", true)
+    xhttp2.open("GET","/TW_Work_1/footer.html", true)
     xhttp2.send()
 }
 function loadAnnoun(){
