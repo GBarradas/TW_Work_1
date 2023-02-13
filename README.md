@@ -63,6 +63,6 @@ Não são aceites ficheiros de código-fonte obtidos online (excepto imagens).
 Os aspetos omissos são decididos pelos alunos e mencionados no relatório. O trabalho será apresentado no final
  
 ### Nota: 16  
-[Pagina](index.html)  
+[Pagina](main.html)  
 [codigo](https://github.com/GBarradas/TW_Work_1)
   
